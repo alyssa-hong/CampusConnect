@@ -1,0 +1,146 @@
+.header {
+  background-color: #fe5c5b;
+  color: #2e2e2e;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden; 
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  text-align: center;
+  position: absolute; 
+  left: 50%;
+  transform: translateX(-50%); 
+}
+
+.header-logo {
+  margin-right: 8px;
+  height: 40px;
+  width: 40px;
+}
+
+.header-center h1 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.header-center h1 a {
+  color: #2e2e2e;
+  text-decoration: none;
+}
+
+.header-center h1 a:hover,
+.header-center h1 a:focus {
+  color: black;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.header button a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.profile-button {
+  background-color: #ffadad;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.profile-button:hover {
+  background-color: #ff758e;
+  transform: scale(1.1);
+}
+
+.settings-button {
+  background-color: #ffadad;
+  border: none;
+  padding: 8px 12px;
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.settings-button:hover {
+  background-color: #ff758e;
+  transform: scale(1.1);
+}
+
+.addevent-button,
+.logout-button {
+  margin: 5px;
+  background-color: #ffadad;
+  border: none;
+  padding: 8px 12px;
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.addevent-button:hover,
+.logout-button:hover {
+  background-color: #ff758e;
+  transform: scale(1.1);
+}
+
+.header a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.header-button {
+  background-color: #ffadad;
+  border: none;
+  padding: 8px 12px;
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.header-button:hover {
+  background-color: #ff758e;
+  transform: scale(1.1);
+}
