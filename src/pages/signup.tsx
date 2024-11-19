@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import '../styles/Auth.css';
@@ -10,17 +10,14 @@ interface SignupProps {
 const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
   const router = useRouter();
 
-    //const handleSignup = () => {
-    //setIsAuthorized(true);
-    //router.push('/home');
-
-  //What the user has to fill out for the signup page
+  // State for signup inputs
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Sends error messages
+  // State for errors and messages
   const [errors, setErrors] = useState<{ userName?: string; email?: string; password?: string }>({});
+  const [message, setMessage] = useState('');
 
   // Validate a single field
   const validateField = (name: string, value: string) => {
@@ -53,9 +50,11 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
     setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
   };
 
-  const handleSignup = () => {
-    // Reset errors
+  // Handle form submission
+  const handleSignup = async () => {
+    // Reset errors and message
     setErrors({});
+    setMessage('');
 
     // Validate all fields
     const newErrors: { userName?: string; email?: string; password?: string } = {
@@ -70,9 +69,28 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
       return;
     }
 
-    // If validation passes, proceed
-    setIsAuthorized(true);
-    router.push('/home');
+    // Send data to the API
+    try {
+      const res = await fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userName, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setIsAuthorized(true);
+        router.push('/home');
+      } else {
+        setMessage(data.error || 'Something went wrong.');
+      }
+    } catch (error) {
+      console.error(error);
+      setMessage('An error occurred. Please try again.');
+    }
   };
 
   return (
@@ -121,6 +139,7 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
         <button className="auth-button signup-button" onClick={handleSignup}>
           Sign Up
         </button>
+        {message && <p className="message-text">{message}</p>}
         <p className="auth-link">
           Already have an account?{' '}
           <Link href="/login">Login</Link>
