@@ -5,32 +5,44 @@ import User from '../../../src/models/user';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      const { userName, password } = req.body;
+      // Parse the request body
+      const { userName, email, password } = req.body;
 
-      // Check if username or password is missing
-      if (!userName || !password) {
-        return res.status(400).json({ error: 'Both userName and password are required.' });
+      // Validate required fields
+      if (!userName || !email || !password) {
+        return res
+          .status(400)
+          .json({ error: 'All fields (userName, email, password) are required.' });
       }
 
       // Connect to MongoDB
       await connectMongoDB();
 
-      // Look for the user in the database with matching username and password
-      const user = await User.findOne({ userName, password });
-
-      // If no user is found, return an error
-      if (!user) {
-        return res.status(401).json({ error: 'Invalid username or password.' });
+      // Check if a user with the provided email already exists
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return res
+          .status(409)
+          .json({ error: 'User already exists. Please use a different email.' });
       }
 
-      // If login is successful, return the user info
-      return res.status(200).json({ message: 'Login successful.', user: { userName: user.userName, email: user.email } });
+      // Create and save a new user
+      const newUser = new User({ userName, email, password });
+      await newUser.save();
+
+      return res
+        .status(201)
+        .json({ message: 'User created successfully.', user: { userName, email } });
     } catch (error: any) {
-      console.error('Error during login:', error);
-      return res.status(500).json({ error: 'Internal server error.', details: error.message });
+      console.error('Error during user signup:', error);
+      return res
+        .status(500)
+        .json({ error: 'Internal server error.', details: error.message });
     }
   } else {
-    // If the method is not POST, return a 405 error
-    return res.status(405).json({ message: 'This endpoint only supports POST requests for user login.' });
+    // Handle unsupported methods
+    return res
+      .status(405)
+      .json({ error: 'Method not allowed. This endpoint only supports POST requests.' });
   }
 }
