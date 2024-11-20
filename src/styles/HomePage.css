@@ -1,7 +1,19 @@
 
 body {
-  background-color: #646464;
+  background-color: #646464; 
+  background-image: 
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), 
+    url('/athens.jpg');
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-attachment: fixed; 
+  min-height: 100vh; 
+  margin: 0; 
+  padding: 0; 
+  font-family: Arial, sans-serif; 
 }
+
 
 .event-header {
   text-align: center;
@@ -49,7 +61,7 @@ body {
   }
   
 .add-event-button {
-  background-color: #fe5c5b;
+  background-color: #d31111;
   color: white;
   border: none;
   padding: 15px 30px;  
