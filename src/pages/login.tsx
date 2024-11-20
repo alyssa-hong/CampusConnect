@@ -48,13 +48,13 @@ const Login: React.FC<LoginProps> = ({ setIsAuthorized }) => {
   const handleLogin = async () => {
     setErrors({});
     setMessage('');
-  
+
     // Validate inputs (example)
     if (!userName || !password) {
       setMessage('Both username and password are required.');
       return;
     }
-  
+
     try {
       const res = await fetch('/api/login', {
         method: 'POST',
@@ -63,11 +63,11 @@ const Login: React.FC<LoginProps> = ({ setIsAuthorized }) => {
         },
         body: JSON.stringify({ userName, password }),
       });
-  
+
       const data = await res.json();
-  
+
       if (res.ok) {
-        // handle successful login (e.g., redirect)
+        // handle successful login (e.g., set authorization)
         setIsAuthorized(true);
         router.push('/home');
       } else {
@@ -78,7 +78,7 @@ const Login: React.FC<LoginProps> = ({ setIsAuthorized }) => {
       setMessage('An error occurred. Please try again.');
     }
   };
-  
+
   return (
     <>
       <div className="title">

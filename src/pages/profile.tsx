@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import '../styles/Profile.css';
 
@@ -6,11 +6,39 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
+    userName: '',
     email: '',
     password: '',
   });
-
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
+
+  useEffect(() => {
+    // Replace with logic to get the current user's email (e.g., from cookies, localStorage, or context)
+    const email = 'user@example.com';  // Hardcoded for testing, replace with dynamic fetching logic
+
+    const fetchUserData = async () => {
+      try {
+        const res = await fetch(`/api/getUser?email=${email}`);
+        if (!res.ok) throw new Error('Failed to fetch user data.');
+
+        const data = await res.json();
+        setFormData({
+          firstName: data.firstName || '',
+          lastName: data.lastName || '',
+          userName: data.userName || '',
+          email: data.email || '',
+          password: data.password || '',
+        });
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -23,30 +51,17 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
   const handleSaveChanges = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form Data:', formData);
-    setFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-    });
   };
 
-  const handleLogout = () => {
-    console.log('Logging out...');
-    setIsAuthorized(false);
-    router.push('/'); // Redirect to the unauthorized page
-  };
+  if (loading) return <p>Loading...</p>;
 
   return (
     <main className="profileSection">
       <div className="profileBox">
         <h2 className="title">Profile Details</h2>
         <form className="profileForm" onSubmit={handleSaveChanges}>
-          <label className="label" htmlFor="firstName">
-            First Name
-          </label>
+          <label htmlFor="firstName">First Name</label>
           <input
-            className="input"
             type="text"
             id="firstName"
             value={formData.firstName}
@@ -54,11 +69,8 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
             placeholder="Enter first name"
           />
 
-          <label className="label" htmlFor="lastName">
-            Last Name
-          </label>
+          <label htmlFor="lastName">Last Name</label>
           <input
-            className="input"
             type="text"
             id="lastName"
             value={formData.lastName}
@@ -66,11 +78,17 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
             placeholder="Enter last name"
           />
 
-          <label className="label" htmlFor="email">
-            Email
-          </label>
+          <label htmlFor="userName">Username</label>
           <input
-            className="input"
+            type="text"
+            id="userName"
+            value={formData.userName}
+            onChange={handleChange}
+            placeholder="Enter username"
+          />
+
+          <label htmlFor="email">Email</label>
+          <input
             type="email"
             id="email"
             value={formData.email}
@@ -78,11 +96,8 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
             placeholder="Enter email"
           />
 
-          <label className="label" htmlFor="password">
-            Password
-          </label>
+          <label htmlFor="password">Password</label>
           <input
-            className="input"
             type="password"
             id="password"
             value={formData.password}
@@ -90,9 +105,7 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
             placeholder="Enter password"
           />
 
-          <button className="saveButton" type="submit">
-            Save Changes
-          </button>
+          <button type="submit" className="saveButton">Save Changes</button>
         </form>
       </div>
     </main>

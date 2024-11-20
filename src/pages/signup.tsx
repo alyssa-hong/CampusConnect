@@ -11,19 +11,29 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
   const router = useRouter();
 
   // State for signup inputs
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   // State for errors and messages
-  const [errors, setErrors] = useState<{ userName?: string; email?: string; password?: string }>({});
+  const [errors, setErrors] = useState<{
+    firstName?: string;
+    lastName?: string;
+    userName?: string;
+    email?: string;
+    password?: string;
+  }>({});
   const [message, setMessage] = useState('');
 
   // Validate a single field
   const validateField = (name: string, value: string) => {
     let error = '';
 
-    if (name === 'userName') {
+    if (name === 'firstName' || name === 'lastName') {
+      if (!value) error = `${name === 'firstName' ? 'First' : 'Last'} name is required.`;
+    } else if (name === 'userName') {
       if (!value) error = 'Username is required.';
     } else if (name === 'email') {
       if (!value) error = 'Email is required.';
@@ -41,6 +51,8 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
     const { name, value } = e.target;
 
     // Update the field value
+    if (name === 'firstName') setFirstName(value);
+    if (name === 'lastName') setLastName(value);
     if (name === 'userName') setUserName(value);
     if (name === 'email') setEmail(value);
     if (name === 'password') setPassword(value);
@@ -57,7 +69,9 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
     setMessage('');
 
     // Validate all fields
-    const newErrors: { userName?: string; email?: string; password?: string } = {
+    const newErrors = {
+      firstName: validateField('firstName', firstName),
+      lastName: validateField('lastName', lastName),
       userName: validateField('userName', userName),
       email: validateField('email', email),
       password: validateField('password', password),
@@ -76,7 +90,7 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userName, email, password }),
+        body: JSON.stringify({ firstName, lastName, userName, email, password }),
       });
 
       const data = await res.json();
@@ -100,6 +114,30 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
       </div>
       <div className="auth-card">
         <h1>Sign Up</h1>
+        <div className="input-box">
+          <label htmlFor="firstName">First Name</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            placeholder="Enter your first name"
+            value={firstName}
+            onChange={handleChange}
+          />
+          {errors.firstName && <p className="error-text">{errors.firstName}</p>}
+        </div>
+        <div className="input-box">
+          <label htmlFor="lastName">Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            placeholder="Enter your last name"
+            value={lastName}
+            onChange={handleChange}
+          />
+          {errors.lastName && <p className="error-text">{errors.lastName}</p>}
+        </div>
         <div className="input-box">
           <label htmlFor="userName">Username</label>
           <input
