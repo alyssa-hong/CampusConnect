@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import Footer from '../components/Footer/Footer';
 import '../styles/UnauthorizedPage.css';
 
 const events = [
@@ -89,6 +90,9 @@ const UnauthorizedPage: React.FC = () => {
           </div>
         ))}
       </div>
+
+      <div style={{ height: '2rem' }}></div>
+      <Footer />
     </div>
   );
 };
