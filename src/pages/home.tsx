@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import Footer from '../components/Footer/Footer';
 import '../styles/HomePage.css'; 
 
 // Dummy event data with submitters name and contact info
@@ -65,6 +66,10 @@ const HomePage: React.FC = () => {
       <Link href="/add-event">
         <button className="add-event-button">Add Event</button>
       </Link>
+
+      <div style={{ height: '2rem' }}></div>
+      <Footer />
+      
     </div>
   );
 };

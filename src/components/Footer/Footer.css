@@ -1,0 +1,146 @@
+.footer {
+    background-color: #fe5c5b;
+    color: #2e2e2e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+ 
+  .footer-left,
+  .footer-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+ 
+  .footer-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+ 
+  .footer-logo {
+    margin-right: 8px;
+    height: 40px;
+    width: 40px;
+  }
+ 
+  .footer-center h1 {
+    font-size: 2.5rem;
+    margin: 0;
+  }
+ 
+  .footer-center h1 a {
+    color: #2e2e2e;
+    text-decoration: none;
+  }
+ 
+  .footer-center h1 a:hover,
+  .footer-center h1 a:focus {
+    color: black;
+  }
+ 
+  .footer-left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+ 
+  .footer-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+ 
+  .footer button a {
+    text-decoration: none;
+    color: inherit;
+  }
+ 
+  .profile-button {
+    background-color: #ffadad;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+ 
+  .profile-button:hover {
+    background-color: #ff758e;
+    transform: scale(1.1);
+  }
+ 
+  .settings-button {
+    background-color: #ffadad;
+    border: none;
+    padding: 8px 12px;
+    color: white;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+ 
+  .settings-button:hover {
+    background-color: #ff758e;
+    transform: scale(1.1);
+  }
+ 
+  .addevent-button,
+  .logout-button {
+    margin: 5px;
+    background-color: #ffadad;
+    border: none;
+    padding: 8px 12px;
+    color: white;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+ 
+  .addevent-button:hover,
+  .logout-button:hover {
+    background-color: #ff758e;
+    transform: scale(1.1);
+  }
+ 
+  .footer a {
+    text-decoration: none;
+    color: inherit;
+  }
+ 
+  .footer-button {
+    background-color: #ffadad;
+    border: none;
+    padding: 8px 12px;
+    color: white;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+ 
+  .footer-button:hover {
+    background-color: #ff758e;
+    transform: scale(1.1);
+  }
