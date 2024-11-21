@@ -1,62 +1,96 @@
-import React, { useState } from 'react';
+import { useSession } from 'next-auth/react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import '../styles/AddEvents.css';
 
 const AddEventPage: React.FC = () => {
-  const [eventImage, setEventImage] = useState<File | null>(null); 
-  const [imagePreview, setImagePreview] = useState<string | null>(null); 
+  const { data: session } = useSession(); // Access session here
+  const [eventImage, setEventImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [eventName, setEventName] = useState('');
   const [eventDate, setEventDate] = useState('');
   const [eventTime, setEventTime] = useState('');
+  const [eventTimeAMPM, setEventTimeAMPM] = useState<'AM' | 'PM'>('AM'); // AM/PM state
   const [eventDescription, setEventDescription] = useState('');
-  const [submitterName, setSubmitterName] = useState('');
-  const [contactInfo, setContactInfo] = useState('');
+  const [userName, setUserName] = useState<string | null>(null); // Store username
+  const [contactInfo, setContactInfo] = useState<string>(''); // Autofill with email
+
   const router = useRouter();
+
+  useEffect(() => {
+    if (session?.user?.email) {
+      const fetchUserName = async () => {
+        try {
+          const res = await fetch(`/api/getUser?email=${session.user.email}`);
+          if (res.ok) {
+            const data = await res.json();
+            setUserName(data.userName);
+            setContactInfo(session.user.email);
+          } else {
+            console.error('Failed to fetch user data');
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+      fetchUserName();
+    }
+  }, [session]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setEventImage(file);
-      setImagePreview(URL.createObjectURL(file)); // Temporary URL for preview
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEventTime(e.target.value);
+  };
+
+  const handleAMPMChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setEventTimeAMPM(e.target.value as 'AM' | 'PM');
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Prepare form data
-    const formData = new FormData();
-    formData.append('eventName', eventName);
-    formData.append('eventDate', eventDate);
-    formData.append('eventTime', eventTime);
-    formData.append('eventDescription', eventDescription);
-    formData.append('submitterName', submitterName);
-    formData.append('contactInfo', contactInfo);
-    if (eventImage) {
-      formData.append('eventImage', eventImage);
+    if (!session?.user?.email || !userName) {
+      alert('You must be logged in to create an event.');
+      return;
     }
 
-    console.log('Event Added:', {
-      eventImage,
+    const formData = {
       eventName,
       eventDate,
-      eventTime,
+      eventTime: `${eventTime} ${eventTimeAMPM}`, // Include AM/PM with the time
       eventDescription,
-      submitterName,
+      eventImage,
+      user: userName,
       contactInfo,
+    };
+
+    console.log('Submitting event data:', formData);
+
+    const res = await fetch('/api/events', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
     });
 
-    // Redirect user back to home after form submission
-    router.push('/home');
+    if (res.ok) {
+      router.push('/home');
+    } else {
+      const errorData = await res.json();
+      alert(`Error: ${errorData.error || 'Error adding event.'}`);
+    }
   };
 
   return (
     <div className="add-event-page">
       <h1>Add New Event</h1>
       <form onSubmit={handleSubmit} className="event-form" encType="multipart/form-data">
-
-      
-        {/* Image Upload Field */}
         <div className="form-group">
           <label>Event Image</label>
           <div className="image-upload">
@@ -91,7 +125,6 @@ const AddEventPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Event Name Field */}
         <div className="form-group">
           <label>Event Name</label>
           <input
@@ -102,7 +135,6 @@ const AddEventPage: React.FC = () => {
           />
         </div>
 
-        {/* Event Date Field */}
         <div className="form-group">
           <label>Event Date</label>
           <input
@@ -113,18 +145,26 @@ const AddEventPage: React.FC = () => {
           />
         </div>
 
-        {/* Event Time Field */}
         <div className="form-group">
           <label>Event Time</label>
-          <input
-            type="time"
-            value={eventTime}
-            onChange={(e) => setEventTime(e.target.value)}
-            required
-          />
+          <div className="time-picker">
+            <input
+              type="time"
+              value={eventTime}
+              onChange={handleTimeChange}
+              required
+            />
+            <select
+              value={eventTimeAMPM}
+              onChange={handleAMPMChange}
+              className="ampm-select"
+            >
+              <option value="AM">AM</option>
+              <option value="PM">PM</option>
+            </select>
+          </div>
         </div>
 
-        {/* Event Description Field */}
         <div className="form-group">
           <label>Description</label>
           <textarea
@@ -134,26 +174,13 @@ const AddEventPage: React.FC = () => {
           />
         </div>
 
-        {/* Submitter Name Field */}
         <div className="form-group">
-          <label>Your Name</label>
-          <input
-            type="text"
-            value={submitterName}
-            onChange={(e) => setSubmitterName(e.target.value)}
-            required
-          />
-        </div>
-
-        {/* Contact Info Field */}
-        <div className="form-group">
-          <label>Contact Information</label>
+          <label>Contact Info</label>
           <input
             type="text"
             value={contactInfo}
-            onChange={(e) => setContactInfo(e.target.value)}
-            placeholder="Email or phone number"
             required
+            readOnly
           />
         </div>
 

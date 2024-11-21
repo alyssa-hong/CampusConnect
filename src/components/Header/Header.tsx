@@ -12,24 +12,23 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ setIsAuthorized, isAuthorized, logout }) => {
   const router = useRouter();
-  const isProfilePage = router.pathname === '/profile';
+  const isProfilePage = router.pathname === '/profile-home';  // Update the check for profile home page
 
   return (
     <header className="header">
       <div className="header-left">
         {isAuthorized && (
           <>
-            <Link href="/profile">
+            <Link href="/profile-home">
               <button className="profile-button">
-                <span>Profile</span>
+                <span>Profile Home</span>
               </button>
             </Link>
-            <button
-              className="settings-button"
-              onClick={() => alert('Settings functionality not implemented yet')}
-            >
-              Settings
-            </button>
+            <Link href="/profile">
+              <button className="settings-button">
+                Settings
+              </button>
+            </Link>
           </>
         )}
       </div>

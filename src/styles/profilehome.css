@@ -1,54 +1,82 @@
 /* Profile Page Styles */
 .profile-home {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; 
-    background-color: #646464;
-    padding: 20px;
-  }
-  
-  h1 {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: #2e2e2e;
-  }
-  
-  .card-box {
-    background-color: #fa9595;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 800px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .delete-button {
-    background-color: rgb(255, 65, 65);
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 40px;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-  
-  .delete-button:hover {
-    background-color: rgba(255, 65, 65, 0.705);
-  }
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align items at the top */
+  align-items: center;
+  height: 100vh; 
+  background-color: #646464;
+  padding: 20px;
+  box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #2e2e2e;
+}
+
+/* Card Box */
+.card-box {
+  background-color: #fa9595;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px; /* Add spacing below the header */
+  overflow-y: auto; /* Ensure content can scroll if necessary */
+}
+
+/* Card */
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Delete Button */
+.delete-button {
+  background-color: rgb(255, 65, 65);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 40px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: rgba(255, 65, 65, 0.705);
+}
+
+/* Header styles */
+.header {
+  position: sticky;
+  top: 0;
+  padding: 10px 10px;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header-left,
+.header-center,
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.header-logo {
+  margin-right: 10px;
+}
+
+
