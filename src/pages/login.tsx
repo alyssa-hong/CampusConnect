@@ -1,124 +1,101 @@
-import React, { useState } from 'react';
-import Link from 'next/link';
+import { useState } from 'react';
+import { signIn } from 'next-auth/react'; // Import signIn from next-auth
 import { useRouter } from 'next/router';
-import '../styles/Auth.css';
+import Link from 'next/link';
 
-interface LoginProps {
-  setIsAuthorized: (auth: boolean) => void;
-}
-
-const Login: React.FC<LoginProps> = ({ setIsAuthorized }) => {
+const Login = () => {
   const router = useRouter();
 
-  // State for login inputs
-  const [userName, setUserName] = useState('');
+  // State for login form
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  // State for errors and messages
-  const [errors, setErrors] = useState<{ userName?: string; password?: string }>({});
-  const [message, setMessage] = useState('');
-
-  // Validate a single field
-  const validateField = (name: string, value: string) => {
-    let error = '';
-
-    if (name === 'userName') {
-      if (!value) error = 'Username is required.';
-    } else if (name === 'password') {
-      if (!value) error = 'Password is required.';
-    }
-
-    return error;
-  };
-
-  // Handle input changes with validation
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    // Update the field value
-    if (name === 'userName') setUserName(value);
-    if (name === 'password') setPassword(value);
-
-    // Validate the field and update errors
-    const error = validateField(name, value);
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
-  };
+  
+  // State for handling error messages and loading state
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Handle form submission
-  const handleLogin = async () => {
-    setErrors({});
-    setMessage('');
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null); // Reset error state
+    setIsLoading(true);
 
-    // Validate inputs (example)
-    if (!userName || !password) {
-      setMessage('Both username and password are required.');
-      return;
-    }
+    const credentials = { email, password };
 
     try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userName, password }),
+      // Call signIn from next-auth to authenticate the user
+      const response = await signIn('credentials', {
+        email,
+        password,
+        redirect: false, // Prevent automatic redirection
       });
 
-      const data = await res.json();
-
-      if (res.ok) {
-        // handle successful login (e.g., set authorization)
-        setIsAuthorized(true);
-        router.push('/home');
+      // If the response contains an error, display the error message
+      if (response?.error) {
+        setError('Invalid email or password. Please try again.');
       } else {
-        setMessage(data.error || 'Something went wrong.');
+        // If login is successful, redirect the user to the home page
+        router.push('/home');
       }
-    } catch (error) {
-      console.error(error);
-      setMessage('An error occurred. Please try again.');
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <>
-      <div className="title">
-        <h1>Welcome back to Campus Connect!</h1>
-      </div>
+    <div className="auth-container">
       <div className="auth-card">
-        <h1>Login</h1>
-        <div className="input-box">
-          <label htmlFor="userName">Username</label>
-          <input
-            type="text"
-            id="userName"
-            name="userName"
-            placeholder="Enter your username"
-            value={userName}
-            onChange={handleChange}
-          />
-          {errors.userName && <p className="error-text">{errors.userName}</p>}
-        </div>
-        <div className="input-box">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={handleChange}
-          />
-          {errors.password && <p className="error-text">{errors.password}</p>}
-        </div>
-        <button className="auth-button login-button" onClick={handleLogin}>
-          Login
-        </button>
-        {message && <p className="message-text">{message}</p>}
+        <h1>Welcome back to Campus Connect!</h1>
+        <h2>Login</h2>
+
+        {/* Login Form */}
+        <form onSubmit={handleSubmit}>
+          {/* Email Input */}
+          <div className="input-box">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          {/* Password Input */}
+          <div className="input-box">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          {/* Display error message if login fails */}
+          {error && <p className="error-message">{error}</p>}
+
+          {/* Submit Button */}
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? 'Logging in...' : 'Login'}
+          </button>
+        </form>
+
+        {/* Link to the signup page */}
         <p className="auth-link">
           Don't have an account? <Link href="/signup">Sign Up</Link>
         </p>
       </div>
-    </>
+    </div>
   );
 };
 

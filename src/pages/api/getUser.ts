@@ -1,3 +1,4 @@
+// pages/api/getUser.ts (or .js)
 import { NextApiRequest, NextApiResponse } from 'next';
 import connectMongoDB from '../../libs/mongodb';
 import User from '../../models/user';
@@ -5,17 +6,17 @@ import User from '../../models/user';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
-      const { userId } = req.query;
+      const { email } = req.query;
 
-      if (!userId) {
-        return res.status(400).json({ error: 'UserId is required to fetch user data.' });
+      if (!email) {
+        return res.status(400).json({ error: 'Email is required to fetch user data.' });
       }
 
       // Connect to MongoDB
       await connectMongoDB();
 
-      // Find user by userId
-      const user = await User.findById(userId);
+      // Find user by email
+      const user = await User.findOne({ email });
 
       if (!user) {
         return res.status(404).json({ error: 'User not found.' });

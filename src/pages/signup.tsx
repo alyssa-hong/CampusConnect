@@ -27,23 +27,28 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
   }>({});
   const [message, setMessage] = useState('');
 
-  // Validate a single field
-  const validateField = (name: string, value: string) => {
-    let error = '';
-
-    if (name === 'firstName' || name === 'lastName') {
-      if (!value) error = `${name === 'firstName' ? 'First' : 'Last'} name is required.`;
-    } else if (name === 'userName') {
-      if (!value) error = 'Username is required.';
-    } else if (name === 'email') {
-      if (!value) error = 'Email is required.';
-      else if (!/\S+@\S+\.\S+/.test(value)) error = 'Please enter a valid email address.';
-    } else if (name === 'password') {
-      if (!value) error = 'Password is required.';
-      else if (value.length < 6) error = 'Password must be at least 6 characters long.';
+  // General field validation function
+  const validateField = (name: string, value: string): string => {
+    switch (name) {
+      case 'firstName':
+      case 'lastName':
+      case 'userName':
+        return value ? '' : `${name.charAt(0).toUpperCase() + name.slice(1)} is required.`;
+      case 'email':
+        return value
+          ? /\S+@\S+\.\S+/.test(value)
+            ? ''
+            : 'Please enter a valid email address.'
+          : 'Email is required.';
+      case 'password':
+        return value
+          ? value.length < 6
+            ? 'Password must be at least 6 characters long.'
+            : ''
+          : 'Password is required.';
+      default:
+        return '';
     }
-
-    return error;
   };
 
   // Handle input changes with validation
@@ -63,12 +68,11 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
   };
 
   // Handle form submission
-  const handleSignup = async () => {
-    // Reset errors and message
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
     setErrors({});
     setMessage('');
-
-    // Validate all fields
+  
     const newErrors = {
       firstName: validateField('firstName', firstName),
       lastName: validateField('lastName', lastName),
@@ -76,14 +80,12 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
       email: validateField('email', email),
       password: validateField('password', password),
     };
-
-    // If there are validation errors, set them and prevent form submission
+  
     if (Object.values(newErrors).some((error) => error !== '')) {
       setErrors(newErrors);
       return;
     }
-
-    // Send data to the API
+  
     try {
       const res = await fetch('/api/signup', {
         method: 'POST',
@@ -92,20 +94,22 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
         },
         body: JSON.stringify({ firstName, lastName, userName, email, password }),
       });
-
+  
       const data = await res.json();
-
+      console.log(data); // Add this for debugging
+  
       if (res.ok) {
         setIsAuthorized(true);
-        router.push('/home');
+        router.push('/login'); // Redirect to home
       } else {
         setMessage(data.error || 'Something went wrong.');
       }
     } catch (error) {
-      console.error(error);
+      console.error('Signup error:', error);
       setMessage('An error occurred. Please try again.');
     }
   };
+  
 
   return (
     <>
@@ -114,69 +118,71 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
       </div>
       <div className="auth-card">
         <h1>Sign Up</h1>
-        <div className="input-box">
-          <label htmlFor="firstName">First Name</label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            placeholder="Enter your first name"
-            value={firstName}
-            onChange={handleChange}
-          />
-          {errors.firstName && <p className="error-text">{errors.firstName}</p>}
-        </div>
-        <div className="input-box">
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            placeholder="Enter your last name"
-            value={lastName}
-            onChange={handleChange}
-          />
-          {errors.lastName && <p className="error-text">{errors.lastName}</p>}
-        </div>
-        <div className="input-box">
-          <label htmlFor="userName">Username</label>
-          <input
-            type="text"
-            id="userName"
-            name="userName"
-            placeholder="Choose a username"
-            value={userName}
-            onChange={handleChange}
-          />
-          {errors.userName && <p className="error-text">{errors.userName}</p>}
-        </div>
-        <div className="input-box">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={handleChange}
-          />
-          {errors.email && <p className="error-text">{errors.email}</p>}
-        </div>
-        <div className="input-box">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Choose a password"
-            value={password}
-            onChange={handleChange}
-          />
-          {errors.password && <p className="error-text">{errors.password}</p>}
-        </div>
-        <button className="auth-button signup-button" onClick={handleSignup}>
-          Sign Up
-        </button>
+        <form onSubmit={handleSignup}>
+          <div className="input-box">
+            <label htmlFor="firstName">First Name</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              placeholder="Enter your first name"
+              value={firstName}
+              onChange={handleChange}
+            />
+            {errors.firstName && <p className="error-text">{errors.firstName}</p>}
+          </div>
+          <div className="input-box">
+            <label htmlFor="lastName">Last Name</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              placeholder="Enter your last name"
+              value={lastName}
+              onChange={handleChange}
+            />
+            {errors.lastName && <p className="error-text">{errors.lastName}</p>}
+          </div>
+          <div className="input-box">
+            <label htmlFor="userName">Username</label>
+            <input
+              type="text"
+              id="userName"
+              name="userName"
+              placeholder="Choose a username"
+              value={userName}
+              onChange={handleChange}
+            />
+            {errors.userName && <p className="error-text">{errors.userName}</p>}
+          </div>
+          <div className="input-box">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={handleChange}
+            />
+            {errors.email && <p className="error-text">{errors.email}</p>}
+          </div>
+          <div className="input-box">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Choose a password"
+              value={password}
+              onChange={handleChange}
+            />
+            {errors.password && <p className="error-text">{errors.password}</p>}
+          </div>
+          <button className="auth-button signup-button" type="submit">
+            Sign Up
+          </button>
+        </form>
         {message && <p className="message-text">{message}</p>}
         <p className="auth-link">
           Already have an account?{' '}

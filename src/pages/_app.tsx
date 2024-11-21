@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import Header from '../components/Header/Header';
+import { SessionProvider } from 'next-auth/react'; // Import SessionProvider
 import '../styles/App.css';
-
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -18,16 +18,18 @@ function MyApp({ Component, pageProps }: AppProps) {
   const showHeader = router.pathname !== '/' && isAuthorized;
 
   return (
-    <div>
-      {showHeader && (
-        <Header
-          setIsAuthorized={setIsAuthorized}
-          isAuthorized={isAuthorized}
-          logout={logout}
-        />
-      )}
-      <Component {...pageProps} setIsAuthorized={setIsAuthorized} isAuthorized={isAuthorized} />
-    </div>
+    <SessionProvider session={pageProps.session}> {/* Wrap your app with SessionProvider */}
+      <div>
+        {showHeader && (
+          <Header
+            setIsAuthorized={setIsAuthorized}
+            isAuthorized={isAuthorized}
+            logout={logout}
+          />
+        )}
+        <Component {...pageProps} setIsAuthorized={setIsAuthorized} isAuthorized={isAuthorized} />
+      </div>
+    </SessionProvider>
   );
 }
 
