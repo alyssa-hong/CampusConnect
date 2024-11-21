@@ -10,10 +10,9 @@ const ProfileHome: React.FC = () => {
   const [isAuthorized, setIsAuthorized] = useState(true);
   const [isLoading, setIsLoading] = useState(true); // Loading state to prevent mismatch
 
-  // Fetch user data from getUser API based on the email
+  // Fetch username for the logged-in user from /api/getUser (based on email)
   useEffect(() => {
     if (session?.user?.email) {
-      // Fetch user data from /api/getUser to get username
       const fetchUserData = async () => {
         try {
           const res = await fetch(`/api/getUser?email=${session.user.email}`);
@@ -31,14 +30,14 @@ const ProfileHome: React.FC = () => {
 
       fetchUserData();
     }
-  }, [session]); // Only run this effect once when session is available
+  }, [session?.user?.email]); // Only run this effect once when the session changes
 
-  // Fetch events for the logged-in user from /api/eventsByUsername (using username instead of email)
+  // Fetch events for the logged-in user from /api/eventsByContactInfo (based on email)
   useEffect(() => {
-    if (username) {
+    if (session?.user?.email) {
       const fetchUserEvents = async () => {
         try {
-          const res = await fetch(`/api/eventsByUsername?username=${username}`);
+          const res = await fetch(`/api/eventsByUsername?email=${session.user.email}`);
           const data = await res.json();
 
           if (res.ok) {
@@ -55,7 +54,7 @@ const ProfileHome: React.FC = () => {
 
       fetchUserEvents();
     }
-  }, [username]); // Trigger fetching of events when the username changes
+  }, [session?.user?.email]); // Trigger fetching of events when the email changes
 
   // Dummy logout function
   const logout = () => {
@@ -63,10 +62,9 @@ const ProfileHome: React.FC = () => {
     // Handle additional logout functionality if needed
   };
 
-  // Function to handle card deletion (for dummy cards, if needed)
+  // Function to handle card deletion
   const handleDelete = async (id: string) => {
     try {
-      // Send DELETE request to the server to delete the event
       const res = await fetch('/api/deleteEvents', {
         method: 'DELETE',
         headers: {
@@ -87,7 +85,6 @@ const ProfileHome: React.FC = () => {
       console.error('Error:', error);
     }
   };
-  
 
   if (isLoading) {
     return <div>Loading...</div>; // Show a loading indicator while data is being fetched
