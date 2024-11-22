@@ -1,4 +1,3 @@
-/* General body styles */
 body {
   background-color: #646464;
   background-image: 
@@ -13,15 +12,22 @@ body {
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh; 
 }
 
-
 main {
   flex: 1; 
-  padding: 100px 20px 80px; /* Add space for fixed header and footer (adjust as needed) */
+  padding: 100px 20px 120px; /* Add extra bottom padding to prevent overlap */
   box-sizing: border-box;
 }
+
+
 
 .event-header {
   text-align: center;
@@ -42,6 +48,7 @@ main {
   gap: 20px;
   justify-content: center;
   margin-top: 20px;
+  padding: 0 10px; /* Add slight padding for better layout */
 }
 
 .event-card {
@@ -49,24 +56,28 @@ main {
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%; 
-  max-width: 250px; 
+  width: 100%;
+  max-width: 250px;
+  text-align: center; /* Ensure consistent alignment */
 }
 
 .event-card img {
   width: 100%;
   height: auto;
   border-radius: 8px;
+  margin-bottom: 10px; /* Add spacing below the image */
 }
 
 .event-card h3 {
   font-size: 1.2rem;
   margin: 10px 0;
+  color: #333; /* Darker text for better readability */
 }
 
 .event-card p {
   color: #555;
   font-size: 0.9rem;
+  margin: 5px 0; /* Consistent spacing for paragraphs */
 }
 
 .add-event-button {
@@ -100,7 +111,8 @@ main {
 @media (max-width: 768px) {
   .event-list {
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
+    padding: 0; /* Remove extra padding for smaller screens */
   }
 
   .event-card {

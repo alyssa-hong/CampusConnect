@@ -1,5 +1,4 @@
 body {
-  background-color: #646464;
   background-image: 
     linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), 
     url('/athens.jpg');
@@ -14,8 +13,6 @@ body {
   flex-direction: column;
   min-height: 100vh; 
 }
-
-
 .add-event-page {
   flex: 1; 
   display: flex;
@@ -26,14 +23,8 @@ body {
   margin-top: 2em;
 }
 
-h1 {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color:rgba(255, 255, 255, 0.757);
-}
-
 .event-form {
+  margin-top: 50px;
   background-color: #c0c0c0d5;
   padding: 15px;
   border-radius: 8px;
@@ -50,7 +41,7 @@ h1 {
   display: block;
   font-size: 1rem;
   margin-bottom: 6px;
-  color: #333;
+  color: #000000;
 }
 
 .form-group input,

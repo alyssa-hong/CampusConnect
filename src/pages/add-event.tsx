@@ -155,7 +155,6 @@ const AddEventPage: React.FC = () => {
     <div className="add-event-page">
       <Header setIsAuthorized={setIsAuthorized} isAuthorized={isAuthorized} logout={logout} />
 
-      <h1>Add New Event</h1>
       <form onSubmit={handleSubmit} className="event-form" encType="multipart/form-data">
         <div className="form-group">
           <label>Event Image</label>
