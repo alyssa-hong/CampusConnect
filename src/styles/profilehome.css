@@ -1,33 +1,39 @@
-/* Profile Page Styles */
-
-body{
+body {
   background-image: 
-linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), 
-url('/athens.jpg');
-
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), 
+    url('/athens.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
+
 
 .profile-home {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Align items at the top */
+  justify-content: flex-start; 
   align-items: center;
-  height: 100vh; 
-  background-color: #646464;
+  min-height: calc(100vh - 50px); 
   padding: 20px;
-  box-sizing: border-box; /* Include padding in element's total width and height */
+  box-sizing: border-box;
 }
 
 h1 {
   text-align: center;
   font-size: 2.5rem;
-  margin-bottom: 20px;
-  color: #2e2e2e;
+  margin-top: 50px;
+  color: #fff; 
 }
 
-/* Card Box */
 .card-box {
-  background-color: #fa9595;
+  background-color: rgba(250, 149, 149, 0.943); 
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -36,11 +42,11 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  margin-top: 20px; /* Add spacing below the header */
-  overflow-y: auto; /* Ensure content can scroll if necessary */
+  margin-top: 20px;
+  overflow-y: auto; 
+  max-height: 60vh; 
 }
 
-/* Card */
 .card {
   display: flex;
   justify-content: space-between;
@@ -49,9 +55,25 @@ h1 {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* Delete Button */
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.card p {
+  font-size: 1rem;
+  color: #555;
+  margin: 0;
+}
+
 .delete-button {
   background-color: rgb(255, 65, 65);
   color: white;
@@ -60,10 +82,46 @@ h1 {
   border-radius: 40px;
   font-size: 1rem;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .delete-button:hover {
   background-color: rgba(255, 65, 65, 0.705);
+  transform: scale(1.05);
 }
 
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
 
+  .card-box {
+    max-height: 50vh;
+  }
+
+  .card {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .delete-button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .card-box {
+    padding: 20px;
+  }
+
+  .delete-button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}

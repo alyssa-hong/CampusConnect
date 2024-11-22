@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Header from '../components/Header/Header';
+import Footer from '../components/Footer/Footer';
 import '../styles/profilehome.css';
 
 const ProfileHome: React.FC = () => {
@@ -118,6 +119,7 @@ const ProfileHome: React.FC = () => {
           <p>No events found.</p>
         )}
       </div>
+      <Footer/>
     </div>
   );
 };
