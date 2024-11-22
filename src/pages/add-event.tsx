@@ -1,6 +1,7 @@
-import { useSession } from 'next-auth/react';
 import React, { useState, useEffect } from 'react';
+import { useSession, signOut } from 'next-auth/react'; // Import signOut
 import { useRouter } from 'next/router';
+import Header from '../components/Header/Header'; // Import Header component
 import '../styles/AddEvents.css';
 
 const AddEventPage: React.FC = () => {
@@ -14,6 +15,9 @@ const AddEventPage: React.FC = () => {
   const [eventDescription, setEventDescription] = useState('');
   const [userName, setUserName] = useState<string | null>(null); // Store username
   const [contactInfo, setContactInfo] = useState<string>(''); // Autofill with email
+  const [uploadedImageId, setUploadedImageId] = useState<string | null>(null); // Store the GridFS fileId
+  const [isAuthorized, setIsAuthorized] = useState(true); // Track authorization state
+  const [isLoading, setIsLoading] = useState(true); // Loading state to prevent mismatch
 
   const router = useRouter();
 
@@ -31,6 +35,8 @@ const AddEventPage: React.FC = () => {
           }
         } catch (error) {
           console.error('Error fetching user data:', error);
+        } finally {
+          setIsLoading(false); // Stop loading once data is fetched
         }
       };
       fetchUserName();
@@ -40,8 +46,11 @@ const AddEventPage: React.FC = () => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setEventImage(file);
-      setImagePreview(URL.createObjectURL(file));
+      setEventImage(file); // Store the file in state
+      setImagePreview(URL.createObjectURL(file)); // Preview the image immediately
+    } else {
+      setEventImage(null);
+      setImagePreview(null);
     }
   };
 
@@ -55,40 +64,89 @@ const AddEventPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
+    // Ensure that the time input matches the selected AM/PM
+    const [hour, minute] = eventTime.split(":").map((str) => parseInt(str, 10));
+  
+    // If the hour is invalid for AM/PM (e.g., trying to set 13:00 for AM)
+    if ((eventTimeAMPM === 'AM' && hour >= 12) || (eventTimeAMPM === 'PM' && hour === 12)) {
+      alert('The hour does not match the selected AM/PM.');
+      return;
+    }
+  
+    // Check if the user is logged in
     if (!session?.user?.email || !userName) {
       alert('You must be logged in to create an event.');
       return;
     }
-
-    const formData = {
+  
+    let uploadedImagePath = null;
+  
+    // If there's an image, handle the upload
+    if (eventImage) {
+      const formData = new FormData();
+      formData.append('eventImage', eventImage);
+  
+      const uploadRes = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+  
+      if (!uploadRes.ok) {
+        const errorData = await uploadRes.json();
+        console.error('Upload failed:', errorData);  // Log the error
+        alert('Image upload failed: ' + errorData.error);
+        return;
+      }
+  
+      const data = await uploadRes.json();
+      uploadedImagePath = data.fileId; // Assuming the response includes the file ID
+    }
+  
+    // Send the event details (including the image path) to the backend
+    const eventData = {
       eventName,
       eventDate,
-      eventTime: `${eventTime} ${eventTimeAMPM}`, // Include AM/PM with the time
+      eventTime: `${eventTime}:${eventTimeAMPM}`,
       eventDescription,
-      eventImage,
+      eventImage: uploadedImageId, // Include GridFS file ID here
       user: userName,
       contactInfo,
     };
-
-    console.log('Submitting event data:', formData);
-
+  
     const res = await fetch('/api/events', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(eventData),
     });
-
+  
     if (res.ok) {
-      router.push('/home');
+      router.push('/home'); // Redirect to home page after success
     } else {
       const errorData = await res.json();
       alert(`Error: ${errorData.error || 'Error adding event.'}`);
     }
   };
+  
+  // Handle logout
+  const logout = async () => {
+    setIsAuthorized(false);
+    await signOut({ callbackUrl: '/' }); // Log out and redirect to home page
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Show a loading indicator while data is being fetched
+  }
 
   return (
     <div className="add-event-page">
+      {/* Include Header component */}
+      <Header 
+        setIsAuthorized={setIsAuthorized} 
+        isAuthorized={isAuthorized} 
+        logout={logout} 
+      />
+
       <h1>Add New Event</h1>
       <form onSubmit={handleSubmit} className="event-form" encType="multipart/form-data">
         <div className="form-group">

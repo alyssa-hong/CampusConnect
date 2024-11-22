@@ -57,6 +57,7 @@ export const authConfig = {
         token.email = user.email;
         token.userName = user.userName;  // Store 'userName' in the token (consistent with schema)
       }
+      console.log(token);
       return token;
     },
     async session({ session, token }) {
