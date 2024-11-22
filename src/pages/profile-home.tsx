@@ -111,6 +111,7 @@ const ProfileHome: React.FC = () => {
               <p>{event.eventName}</p>
               <p>{new Date(event.eventDate).toLocaleDateString()} at {event.eventTime}</p>
               <p>{event.eventDescription}</p>
+              <p>{event.location}</p>
               <button className="delete-button" onClick={() => handleDelete(event._id)}>
                 Delete
               </button>

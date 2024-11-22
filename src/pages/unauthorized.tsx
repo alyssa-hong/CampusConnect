@@ -93,6 +93,9 @@ const UnauthorizedPage: React.FC = () => {
               <p>
                 <strong>Contact:</strong> {event.contactInfo}
               </p>
+              <p>
+                <strong>Location:</strong> {event.location}
+              </p>
             </div>
           ))
         ) : (
