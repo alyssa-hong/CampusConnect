@@ -13,7 +13,7 @@ const HomePage: React.FC = () => {
   const router = useRouter(); 
 
   const logout = async () => {
-    await signOut(); 
+    await signOut();
     router.push('/unauthorized'); 
   };
 
@@ -23,7 +23,6 @@ const HomePage: React.FC = () => {
         const res = await fetch('/api/allEvents');
         if (res.ok) {
           const data = await res.json();
-          console.log('Fetched events:', data);
           setEvents(data.events); // Set the events data into state
         } else {
           console.error('Failed to fetch events');
@@ -40,7 +39,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div>
-      {/* Pass only necessary props */}
+      {/* Use the reusable Header component */}
       <Header isAuthorized={isAuthorized} logout={logout} />
 
       <h1 className="event-header">All Events</h1>

@@ -11,7 +11,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ isAuthorized, logout }) => {
   const router = useRouter();
-  const isProfilePage = router.pathname === '/profile-home'; // Check if on profile page
+  const isProfilePage = router.pathname === '/profile-home';
 
   return (
     <header className="header">
@@ -29,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({ isAuthorized, logout }) => {
           </>
         )}
       </div>
-      
+
       <div className="header-center">
         <Image
           src="/campusConnectLogo.webp"
@@ -45,23 +45,9 @@ const Header: React.FC<HeaderProps> = ({ isAuthorized, logout }) => {
 
       <div className="header-right">
         {isAuthorized ? (
-          isProfilePage ? (
-            <>
-              <button
-                className="addevent-button"
-                onClick={() => router.push('/add-event')}
-              >
-                +Add Event
-              </button>
-              <button className="logout-button" onClick={logout}>
-                Logout
-              </button>
-            </>
-          ) : (
-            <button className="logout-button" onClick={logout}>
-              Logout
-            </button>
-          )
+          <button className="logout-button" onClick={logout}>
+            Logout
+          </button>
         ) : (
           <>
             <Link href="/login">

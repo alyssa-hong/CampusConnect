@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { signIn } from 'next-auth/react'; // Import signIn from next-auth
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import '../styles/Auth.css';
 
 const Login = () => {
   const router = useRouter();
@@ -48,7 +49,7 @@ const Login = () => {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h1>Welcome back to Campus Connect!</h1>
+        <h1 className="title">Welcome back to Campus Connect!</h1>
         <h2>Login</h2>
 
         {/* Login Form */}
@@ -82,17 +83,24 @@ const Login = () => {
           </div>
 
           {/* Display error message if login fails */}
-          {error && <p className="error-message">{error}</p>}
+          {error && <p className="error-text">{error}</p>}
 
           {/* Submit Button */}
-          <button type="submit" disabled={isLoading}>
+          <button
+            type="submit"
+            className="auth-button login-button"
+            disabled={isLoading}
+          >
             {isLoading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
         {/* Link to the signup page */}
         <p className="auth-link">
-          Don't have an account? <Link href="/signup">Sign Up</Link>
+          Don't have an account?{' '}
+          <Link href="/signup" className="signup-link">
+            Sign Up
+          </Link>
         </p>
       </div>
     </div>
