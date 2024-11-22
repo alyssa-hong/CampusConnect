@@ -12,6 +12,7 @@ const EditEventPage = () => {
     eventDate: '',
     eventTime: '',
     eventDescription: '',
+    location: '', // Corrected to match schema
   });
 
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -55,6 +56,7 @@ const EditEventPage = () => {
             eventDate: formatDate(data.eventDate || new Date().toISOString()),
             eventTime: preprocessTime(data.eventTime || ''),
             eventDescription: data.eventDescription || '',
+            location: data.location || '', // Corrected field name here
           });
         } catch (err) {
           setError((err as Error).message || 'An error occurred while fetching event data');
@@ -158,6 +160,18 @@ const EditEventPage = () => {
             value={event.eventDescription}
             onChange={(e) =>
               setEvent({ ...event, eventDescription: e.target.value })
+            }
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Event Location</label>
+          <input
+            type="text"
+            value={event.location} // Corrected field name here
+            onChange={(e) =>
+              setEvent({ ...event, location: e.target.value }) // Corrected field name here
             }
             required
           />
