@@ -65,6 +65,7 @@ const HomePage: React.FC = () => {
               <p><strong>Description:</strong> {event.eventDescription}</p>
               <p><strong>Submitted by:</strong> {event.user}</p>
               <p><strong>Contact:</strong> {event.contactInfo}</p>
+              <p><strong>Location:</strong> {event.location}</p>
             </div>
           ))
         ) : (
