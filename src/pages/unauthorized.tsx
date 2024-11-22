@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
+import Footer from '../components/Footer/Footer';
 import Image from 'next/image';
 import '../styles/UnauthorizedPage.css';
 

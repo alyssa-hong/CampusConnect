@@ -1,4 +1,12 @@
 /* Profile Page Styles */
+
+body{
+  background-image: 
+linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), 
+url('/athens.jpg');
+
+}
+
 .profile-home {
   display: flex;
   flex-direction: column;
@@ -56,27 +64,6 @@ h1 {
 
 .delete-button:hover {
   background-color: rgba(255, 65, 65, 0.705);
-}
-
-/* Header styles */
-.header {
-  position: sticky;
-  top: 0;
-  padding: 10px 10px;
-  width: 100%;
-  z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.header-left,
-.header-center,
-.header-right {
-  display: flex;
-  align-items: center;
-}
-
-.header-logo {
-  margin-right: 10px;
 }
 
 

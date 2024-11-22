@@ -1,32 +1,49 @@
-.add-event-page {
+body {
+  background-color: #646464;
+  background-image: 
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), 
+    url('/athens.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; 
+  min-height: 100vh; 
+}
+
+
+.add-event-page {
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
   align-items: center;
-  height: 100vh;
-  background-color: #646464;
   padding: 20px;
+  margin-top: 2em;
 }
 
 h1 {
   text-align: center;
   font-size: 2rem;
-  margin-bottom: 20px; 
-  color: #2e2e2e;
+  margin-bottom: 20px;
+  color:rgba(255, 255, 255, 0.757);
 }
 
 .event-form {
-  background-color: #fa9595;
-  padding: 15px; 
+  background-color: #c0c0c0d5;
+  padding: 15px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 800px;
-  margin-top: 30px; 
 }
 
 .form-group {
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 
 .form-group label {
@@ -48,7 +65,7 @@ h1 {
 
 .form-group textarea {
   resize: vertical;
-  min-height: 70px; 
+  min-height: 70px;
 }
 
 .submit-button {
@@ -66,7 +83,6 @@ h1 {
   background-color: rgba(255, 65, 65, 0.705);
 }
 
-
 .image-upload {
   display: flex;
   flex-direction: column;
@@ -82,7 +98,7 @@ h1 {
 
 .image-preview img {
   max-width: 100%;
-  max-height: 300px; 
+  max-height: 300px;
   border-radius: 8px;
   margin-bottom: 10px;
   border: 2px solid #dddddda2;
@@ -94,7 +110,7 @@ h1 {
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 10px 20px; 
+  padding: 10px 20px;
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -111,8 +127,8 @@ h1 {
   text-align: center;
   cursor: pointer;
   background-color: #fff;
-  width: 100%; 
-  max-width: 400px; 
+  width: 100%;
+  max-width: 400px;
   transition: background-color 0.3s ease;
 }
 
@@ -129,4 +145,3 @@ h1 {
 .hidden-input {
   display: none;
 }
-

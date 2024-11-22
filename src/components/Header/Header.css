@@ -1,13 +1,16 @@
 .header {
-  background-color: #ffffff17;
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  z-index: 1000; 
   color: #000000;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  width: 100%;
   box-sizing: border-box;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .header-left,
@@ -40,7 +43,7 @@
 }
 
 .header-center h1 a {
-  color: rgba(255, 255, 255, 0.745);
+  color: rgba(255, 255, 255, 0.662);
   text-decoration: none;
 }
 

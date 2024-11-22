@@ -1,3 +1,4 @@
+/* General body styles */
 body {
   background-color: #646464;
   background-image: 
@@ -7,10 +8,19 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  min-height: 100vh;
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+}
+
+
+main {
+  flex: 1; 
+  padding: 100px 20px 80px; /* Add space for fixed header and footer (adjust as needed) */
+  box-sizing: border-box;
 }
 
 .event-header {
@@ -30,7 +40,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: center; 
+  justify-content: center;
   margin-top: 20px;
 }
 
@@ -60,7 +70,7 @@ body {
 }
 
 .add-event-button {
-  background-color: #d31111;
+  background-color: #b20000d4;
   color: white;
   border: none;
   padding: 15px 30px;
@@ -78,12 +88,12 @@ body {
 }
 
 .add-event-button:hover {
-  background-color: #ff758e;
+  background-color: #b2000094;
   transform: scale(1.1);
 }
 
 .add-event-button:focus {
-  outline: 2px solid #ff758e;
+  outline: 2px solid #b20000d4;
   transform: scale(1.1);
 }
 
