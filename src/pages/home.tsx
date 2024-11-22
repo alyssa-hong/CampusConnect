@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useSession, signOut } from 'next-auth/react';
-import { useRouter } from 'next/router'; 
-import Header from '../components/Header/Header'; 
+import { useRouter } from 'next/router';
+import Header from '../components/Header/Header';
 import Link from 'next/link';
 import Footer from '../components/Footer/Footer';
 import Image from 'next/image';
 import '../styles/HomePage.css';
 
 const HomePage: React.FC = () => {
-  const { data: session } = useSession(); 
-  const [isAuthorized, setIsAuthorized] = useState(false); 
+  const { data: session, status } = useSession(); // Destructure status to check loading state
   const [events, setEvents] = useState<any[]>([]); 
   const router = useRouter(); 
 
+  const logout = async () => {
+    await signOut(); 
+    router.push('/unauthorized'); 
+  };
+
   useEffect(() => {
-    if (session) {
-      setIsAuthorized(true);
-    } else {
-      setIsAuthorized(false);
-    }
-  
     const fetchEvents = async () => {
       try {
         const res = await fetch('/api/allEvents');
@@ -34,23 +32,18 @@ const HomePage: React.FC = () => {
         console.error('Error fetching events:', error);
       }
     };
-  
-    fetchEvents();
-  }, [session]);
-  
 
-  const logout = async () => {
-    await signOut(); 
-    setIsAuthorized(false);
-    router.push('/unauthorized'); 
-  };
+    fetchEvents();
+  }, []);
+  
+  // Check if session is still loading
+  const isAuthorized = status === 'authenticated';
 
   return (
     <div>
-      <Header 
-        isAuthorized={isAuthorized} 
-        setIsAuthorized={setIsAuthorized} 
-        logout={logout} 
+      <Header
+        isAuthorized={isAuthorized} // Pass the updated isAuthorized state
+        logout={logout}
       />
       <h1 className="event-header">All Events</h1>
       <p className="event-head">Here are all the events happening:</p>

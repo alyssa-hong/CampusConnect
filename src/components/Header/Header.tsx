@@ -12,7 +12,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ setIsAuthorized, isAuthorized, logout }) => {
   const router = useRouter();
-  const isProfilePage = router.pathname === '/profile-home';  // Update the check for profile home page
+  const isProfilePage = router.pathname === '/profile-home';  // Check if on profile page
 
   return (
     <header className="header">

@@ -1,30 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react'; // Import useSession hook
 import Footer from '../components/Footer/Footer';
 import Image from 'next/image';
 import '../styles/UnauthorizedPage.css';
+import { useRouter } from 'next/router'; // Import useRouter for redirection
 
 const UnauthorizedPage: React.FC = () => {
+  const { data: session, status } = useSession(); // Get session data and status
+  const router = useRouter(); // Use the Next.js router for redirection
+
   const [events, setEvents] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const res = await fetch('/api/allEvents');
-        if (res.ok) {
-          const data = await res.json();
-          console.log('Fetched events:', data);
-          setEvents(data.events); // Set the events data into state
-        } else {
-          console.error('Failed to fetch events');
+    if (session?.user) {
+      // If user is logged in, redirect to /home
+      router.push('/home');
+    } else {
+      const fetchEvents = async () => {
+        try {
+          const res = await fetch('/api/allEvents');
+          if (res.ok) {
+            const data = await res.json();
+            console.log('Fetched events:', data);
+            setEvents(data.events); // Set the events data into state
+          } else {
+            console.error('Failed to fetch events');
+          }
+        } catch (error) {
+          console.error('Error fetching events:', error);
         }
-      } catch (error) {
-        console.error('Error fetching events:', error);
-      }
-    };
+      };
 
-    fetchEvents();
-  }, []);
+      fetchEvents();
+    }
+  }, [session, router]); // Dependency array includes session and router
 
   return (
     <div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react'; // Import signOut
+import { useRouter } from 'next/router'; // Import useRouter
 import Header from '../components/Header/Header'; // Import Header component
 import '../styles/profilehome.css';
 
@@ -9,6 +10,7 @@ const ProfileHome: React.FC = () => {
   const [events, setEvents] = useState<any[]>([]); // State to store events
   const [isAuthorized, setIsAuthorized] = useState(true);
   const [isLoading, setIsLoading] = useState(true); // Loading state to prevent mismatch
+  const router = useRouter(); // Initialize the router
 
   // Fetch username for the logged-in user from /api/getUser (based on email)
   useEffect(() => {
@@ -56,10 +58,10 @@ const ProfileHome: React.FC = () => {
     }
   }, [session?.user?.email]); // Trigger fetching of events when the email changes
 
-  // Dummy logout function
-  const logout = () => {
+  // Handle logout
+  const logout = async () => {
     setIsAuthorized(false);
-    // Handle additional logout functionality if needed
+    await signOut({ callbackUrl: '/' }); // Log out the user and redirect to the home page
   };
 
   // Function to handle card deletion
@@ -111,6 +113,12 @@ const ProfileHome: React.FC = () => {
               <p>{event.eventDescription}</p>
               <button className="delete-button" onClick={() => handleDelete(event._id)}>
                 Delete
+              </button>
+              <button
+                className="edit-button"
+                onClick={() => router.push(`/editEvent/${event._id}`)} // Redirect to the edit page
+              >
+                Edit
               </button>
             </div>
           ))

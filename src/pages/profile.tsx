@@ -108,8 +108,9 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
     }));
   };
 
-  const logout = () => {
-    signOut(); // This will log the user out
+  const logout = async () => {
+    await signOut(); // This will log the user out
+    router.push('/'); // Redirect to home page after logging out
   };
 
   if (loading) return <p>Loading...</p>;
