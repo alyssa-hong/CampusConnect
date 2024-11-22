@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { FaGithub } from 'react-icons/fa'; // Import GitHub logo from react-icons
 import './Footer.css';
 
@@ -14,6 +15,9 @@ const Footer: React.FC = () => {
       >
         <FaGithub className="footer-icon" aria-label="GitHub" />
       </a>
+      <b>
+      <Link href="/about" className="footer-link">About Campus Connect</Link>
+      </b>
     </footer>
   );
 };

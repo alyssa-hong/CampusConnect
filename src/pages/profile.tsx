@@ -143,7 +143,7 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
                   onClick={() => toggleEditable('firstName')}
                   className="editButton"
                 >
-                  {isEditable.firstName ? 'Save' : 'Edit'}
+                  {isEditable.firstName ? 'Done' : 'Edit'}
                 </button>
               </div>
             </div>
@@ -164,7 +164,7 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
                   onClick={() => toggleEditable('lastName')}
                   className="editButton"
                 >
-                  {isEditable.lastName ? 'Save' : 'Edit'}
+                  {isEditable.lastName ? 'Done' : 'Edit'}
                 </button>
               </div>
             </div>
@@ -185,7 +185,7 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
                   onClick={() => toggleEditable('userName')}
                   className="editButton"
                 >
-                  {isEditable.userName ? 'Save' : 'Edit'}
+                  {isEditable.userName ? 'Done' : 'Edit'}
                 </button>
               </div>
             </div>
@@ -225,7 +225,7 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
                   onClick={() => toggleEditable('password')}
                   className="editButton"
                 >
-                  {isEditable.password ? 'Save' : 'Edit'}
+                  {isEditable.password ? 'Done' : 'Edit'}
                 </button>
               </div>
             </div>

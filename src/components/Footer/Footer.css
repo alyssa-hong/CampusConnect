@@ -144,3 +144,7 @@
     background-color: #ff758e;
     transform: scale(1.1);
   }
+
+  .footer a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
