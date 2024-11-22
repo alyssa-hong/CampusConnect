@@ -8,7 +8,7 @@ import Image from 'next/image';
 import '../styles/HomePage.css';
 
 const HomePage: React.FC = () => {
-  const { data: session, status } = useSession(); // Destructure status to check loading state
+  const { data: session, status } = useSession(); // Destructure session status
   const [events, setEvents] = useState<any[]>([]); 
   const router = useRouter(); 
 
@@ -36,20 +36,17 @@ const HomePage: React.FC = () => {
     fetchEvents();
   }, []);
   
-  // Check if session is still loading
-  const isAuthorized = status === 'authenticated';
+  const isAuthorized = status === 'authenticated'; // Check if session is authenticated
 
   return (
     <div>
-      <Header
-        isAuthorized={isAuthorized} // Pass the updated isAuthorized state
-        logout={logout}
-      />
+      {/* Pass only necessary props */}
+      <Header isAuthorized={isAuthorized} logout={logout} />
+
       <h1 className="event-header">All Events</h1>
       <p className="event-head">Here are all the events happening:</p>
 
       <div className="event-list">
-        {/* Only render events after they are fetched */}
         {events.length > 0 ? (
           events.map((event) => (
             <div key={event._id} className="event-card">
@@ -61,14 +58,14 @@ const HomePage: React.FC = () => {
                 className="event-image"
               />
               <h3><strong>Title:</strong> {event.eventName}</h3>
-              <p><strong>Event Date: {new Date(event.eventDate).toLocaleDateString()} at {event.eventTime}</strong></p>
+              <p><strong>Event Date:</strong> {new Date(event.eventDate).toLocaleDateString()} at {event.eventTime}</p>
               <p><strong>Description:</strong> {event.eventDescription}</p>
               <p><strong>Submitted by:</strong> {event.user}</p>
               <p><strong>Contact:</strong> {event.contactInfo}</p>
             </div>
           ))
         ) : (
-          <p>Loading events...</p> // Show a loading state while events are being fetched
+          <p>Loading events...</p>
         )}
       </div>
 

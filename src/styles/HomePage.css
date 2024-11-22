@@ -1,19 +1,17 @@
-
 body {
-  background-color: #646464; 
+  background-color: #646464;
   background-image: 
     linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), 
     url('/athens.jpg');
-  background-size: cover; 
-  background-position: center; 
-  background-repeat: no-repeat; 
-  background-attachment: fixed; 
-  min-height: 100vh; 
-  margin: 0; 
-  padding: 0; 
-  font-family: Arial, sans-serif; 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
 }
-
 
 .event-header {
   text-align: center;
@@ -29,51 +27,52 @@ body {
 }
 
 .event-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 20px;
-  }
-  
-  .event-card {
-    background-color: white;
-    padding: 15px;  
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 250px;  
-  
-  }
-  
-  .event-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
-  
-  .event-card h3 {
-    font-size: 1.2rem;  
-    margin: 10px 0;
-  }
-  
-  .event-card p {
-    color: #555;
-    font-size: 0.9rem;  
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center; /* Center align cards */
+  margin-top: 20px;
+}
+
+.event-card {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Full width for mobile */
+  max-width: 250px; /* Limit width on larger screens */
+}
+
+.event-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.event-card h3 {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.event-card p {
+  color: #555;
+  font-size: 0.9rem;
+}
+
 .add-event-button {
   background-color: #d31111;
   color: white;
   border: none;
-  padding: 15px 30px;  
+  padding: 15px 30px;
   border-radius: 50px;
   cursor: pointer;
   margin-top: 20px;
   display: block;
-  width: 250px;  
+  width: 250px;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  font-size: 1.1rem; 
+  font-size: 1.1rem;
   transition: background-color 0.3s ease, transform 0.2s ease;
   text-decoration: none;
 }
@@ -81,4 +80,40 @@ body {
 .add-event-button:hover {
   background-color: #ff758e;
   transform: scale(1.1);
+}
+
+.add-event-button:focus {
+  outline: 2px solid #ff758e;
+  transform: scale(1.1);
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .event-list {
+    flex-direction: column;
+    align-items: center; /* Center align on smaller screens */
+  }
+
+  .event-card {
+    width: 90%; /* Take most of the screen on smaller devices */
+  }
+
+  .add-event-button {
+    width: 90%; /* Full width button */
+  }
+}
+
+@media (max-width: 480px) {
+  .event-header {
+    font-size: 1.2rem; /* Smaller headers for mobile */
+  }
+
+  .event-head {
+    font-size: 1rem;
+  }
+
+  .add-event-button {
+    font-size: 1rem;
+    padding: 10px 20px; /* Reduce padding for smaller screens */
+  }
 }
