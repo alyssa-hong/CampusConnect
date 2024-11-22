@@ -34,20 +34,21 @@ const About: React.FC = () => {
       <div className="about-card">
         <h1><b>About Campus Connect</b></h1>
         <p>
-          Campus Connect is a platform designed to help UGA students stay
-          connected. It allows people to discover events and people to attend events with.
-            This helps enhance student communication, resource sharing, and the overall enjoyment of campus life.
+        Campus Connect is a platform designed to help UGA students stay engaged and connected. 
+        It allows users to post events and share their contact information, making it easier 
+        for others to discover activities they'd like to attend. Users can connect with event 
+        posters to coordinate attendance, fostering collaboration and shared experiences.
         </p>
         <p>
-          The website aims to bring the community together by providing easy access to campus resources and events,
-          fostering a more engaged and informed campus culture. Also, it provides a platform to make connections and 
-          friendships within the Georgia community.
-          
+        The website's goal is to strengthen the UGA community by providing seamless access to 
+        campus events and resources. By encouraging participation and interaction, Campus Connect 
+        supports the development of meaningful connections, friendships, and a vibrant campus culture.
+        </p>
           <p><b>At UGA, no one barks alone.</b></p>
 
             <br></br>
           <p>Created by Jennifer Ngo, Alyssa Hong, Katelyn Fernandes, and Alex Duong.</p>
-        </p>
+      
       </div>
     </div>
   );
