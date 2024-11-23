@@ -1,46 +1,50 @@
-// pages/api/upload.js
 import multer from 'multer';
-import nextConnect from 'next-connect';
+import { NextApiRequest, NextApiResponse } from 'next';
+import path from 'path';
 import fs from 'fs';
 
+// Multer configuration
 const upload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      const uploadPath = './public/uploads';
+      const uploadPath = path.join(process.cwd(), 'public', 'uploads');
       if (!fs.existsSync(uploadPath)) {
         fs.mkdirSync(uploadPath, { recursive: true });
       }
       cb(null, uploadPath);
     },
-    filename: (req, file, cb) => cb(null, `${Date.now()}-${file.originalname}`),
+    filename: (req, file, cb) => {
+      cb(null, `${Date.now()}-${file.originalname}`);
+    },
   }),
 });
 
-const apiRoute = nextConnect({
-  onError(error, req, res) {
-    res.status(501).json({ error: `Something went wrong: ${error.message}` });
-  },
-  onNoMatch(req, res) {
-    res.status(405).json({ error: `Method ${req.method} Not Allowed` });
-  },
-});
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  if (req.method === 'POST') {
+    upload.single('eventImage')(req as any, {} as any, (err) => {
+      if (err) {
+        console.error('Upload error:', err);
+        return res.status(500).json({ error: `Upload error: ${err.message}` });
+      }
 
-apiRoute.use(upload.single('eventImage'));
+      if (!(req as any).file) {
+        return res.status(400).json({ error: 'No file uploaded.' });
+      }
 
-apiRoute.post((req, res) => {
-  if (!req.file) {
-    console.error('No file uploaded.');
-    return res.status(400).json({ error: 'No file uploaded.' });
+      res.status(200).json({
+        filePath: `/uploads/${(req as any).file.filename}`,
+        message: 'File uploaded successfully',
+      });
+    });
+  } else {
+    res.status(405).json({ error: `Method ${req.method} is not allowed.` });
   }
-
-  console.log('File uploaded:', req.file);
-  res.status(200).json({ filePath: `/uploads/${req.file.filename}` });
-});
-
-export default apiRoute;
+};
 
 export const config = {
   api: {
     bodyParser: false,
   },
 };
+
+export default handler;
