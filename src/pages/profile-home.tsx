@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useSession, signOut } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer/Footer';
-import '../styles/profilehome.css';
+import { useSession, signOut } from 'next-auth/react'; // Import session and signOut
+import { useRouter } from 'next/router'; // Import useRouter for navigation
+import Header from '../components/Header/Header'; // Import Header component
+import '../styles/profilehome.css'; // Import styles
 
 const ProfileHome: React.FC = () => {
-  const { data: session } = useSession();
-  const [username, setUsername] = useState<string>('');
-  const [events, setEvents] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
+  const { data: session } = useSession(); // Access user session data
+  const [username, setUsername] = useState<string>(''); // State to store the username
+  const [events, setEvents] = useState<any[]>([]); // State to store events
+  const [isAuthorized, setIsAuthorized] = useState(true); // Authorization state
+  const [isLoading, setIsLoading] = useState(true); // Loading state
+  const router = useRouter(); // Router for navigation
 
-  // Fetch user data
+  // Fetch username for the logged-in user
   useEffect(() => {
     if (session?.user?.email) {
       const fetchUserData = async () => {
@@ -21,7 +21,7 @@ const ProfileHome: React.FC = () => {
           const data = await res.json();
 
           if (res.ok) {
-            setUsername(data.userName);
+            setUsername(data.userName); // Set the fetched username
           } else {
             console.error('Error fetching user data:', data.error);
           }
@@ -32,9 +32,9 @@ const ProfileHome: React.FC = () => {
 
       fetchUserData();
     }
-  }, [session?.user?.email]);
+  }, [session?.user?.email]); // Run this effect when the session email changes
 
-  // Fetch user events
+  // Fetch events for the logged-in user
   useEffect(() => {
     if (session?.user?.email) {
       const fetchUserEvents = async () => {
@@ -43,27 +43,28 @@ const ProfileHome: React.FC = () => {
           const data = await res.json();
 
           if (res.ok) {
-            setEvents(data.events || []);
+            setEvents(data.events); // Update state with fetched events
           } else {
             console.error('Error fetching events:', data.error);
           }
         } catch (error) {
           console.error('Error:', error);
         } finally {
-          setIsLoading(false);
+          setIsLoading(false); // End loading state
         }
       };
 
       fetchUserEvents();
     }
-  }, [session?.user?.email]);
+  }, [session?.user?.email]); // Trigger fetching of events when the email changes
 
-  // Handle logout
+  // Handle user logout
   const logout = async () => {
-    await signOut({ callbackUrl: '/' });
+    setIsAuthorized(false);
+    await signOut({ callbackUrl: '/' }); // Sign out and redirect to home page
   };
 
-  // Handle delete event
+  // Handle deleting an event
   const handleDelete = async (id: string) => {
     try {
       const res = await fetch('/api/deleteEvents', {
@@ -71,13 +72,14 @@ const ProfileHome: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id }),
+        body: JSON.stringify({ id }), // Send event ID in request body
       });
 
+      const data = await res.json();
+
       if (res.ok) {
-        setEvents((prevEvents) => prevEvents.filter((event) => event._id !== id));
+        setEvents(events.filter((event) => event._id !== id)); // Remove deleted event from state
       } else {
-        const data = await res.json();
         console.error('Error deleting event:', data.error);
       }
     } catch (error) {
@@ -86,40 +88,50 @@ const ProfileHome: React.FC = () => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>; // Display loading message
   }
 
   return (
     <div className="profile-home">
-      <Header isAuthorized={!!session} logout={logout} />
+      {/* Include Header component */}
+      <Header 
+        setIsAuthorized={setIsAuthorized} 
+        isAuthorized={isAuthorized} 
+        logout={logout} 
+      />
 
-      <h1>Welcome, {username || 'User'}</h1>
+      <h1>Welcome, {username || 'Loading...'}</h1> {/* Show username or loading text */}
 
-      <div className="card-box">
+      <div className="event-list">
+        {/* Render fetched events */}
         {events.length > 0 ? (
           events.map((event) => (
-            <div key={event._id} className="card">
-              <div>
-                <p><strong>{event.eventName}</strong></p>
-                <p>{new Date(event.eventDate).toLocaleDateString()} at {event.eventTime}</p>
-                <p>{event.eventDescription}</p>
-                <p>{event.location}</p>
-              </div>
-              <div>
-                <button
-                  className="delete-button"
-                  onClick={() => handleDelete(event._id)}
-                >
-                  Delete
-                </button>
-              </div>
+            <div key={event._id} className="event-card">
+              <p><strong>Event Name:</strong> {event.eventName}</p>
+              <p>
+                <strong>Date:</strong> {new Date(event.eventDate).toLocaleDateString()} at{' '}
+                {event.eventTime}
+              </p>
+              <p><strong>Description:</strong> {event.eventDescription}</p>
+              <p><strong>Location:</strong> {event.location || 'Not provided'}</p>
+              <button
+                className="delete-button"
+                onClick={() => handleDelete(event._id)} // Delete event
+              >
+                Delete
+              </button>
+              <button
+                className="edit-button"
+                onClick={() => router.push(`/editEvent/${event._id}`)} // Redirect to edit event page
+              >
+                Edit
+              </button>
             </div>
           ))
         ) : (
-          <p>No events found.</p>
+          <p>No events found.</p> // Display if no events are available
         )}
       </div>
-      <Footer/>
     </div>
   );
 };
