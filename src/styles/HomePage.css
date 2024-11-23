@@ -1,9 +1,9 @@
-
 body {
-  background-color: #646464; 
+  background-color: #6c1515; 
   background-image: 
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), 
-    url('/athens.jpg');
+  linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), 
+  url('/athens.jpg');
+
   background-size: cover; 
   background-position: center; 
   background-repeat: no-repeat; 
