@@ -139,8 +139,9 @@ const AddEventPage: React.FC = () => {
   }
 
   return (
+    <>
+    <Header isAuthorized={!!session?.user} logout={logout} />
     <div className="add-event-page">
-      <Header isAuthorized={!!session?.user} logout={logout} />
       <form onSubmit={handleSubmit} className="event-form">
         <div className="form-group">
           <label>Event Image</label>
@@ -240,6 +241,7 @@ const AddEventPage: React.FC = () => {
         <button type="submit" className="submit-button">Submit Event</button>
       </form>
     </div>
+    </>
   );
 };
 

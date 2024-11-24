@@ -16,8 +16,9 @@ const About: React.FC = () => {
   };
 
   return (
+    <>
+    <Header isAuthorized={!!session} logout={logout} />
     <div className="about-container">
-      <Header isAuthorized={!!session} logout={logout} />
 
       <div className="about-card">
         <Image
@@ -46,6 +47,7 @@ const About: React.FC = () => {
 
       <Footer />
     </div>
+    </>
   );
 };
 

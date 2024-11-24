@@ -67,8 +67,9 @@ const ProfileHome: React.FC = () => {
   if (isLoading) return <div className="loading">Loading...</div>;
 
   return (
+    <>
+    <Header setIsAuthorized={setIsAuthorized} isAuthorized={isAuthorized} logout={logout} />
     <div className="profile-home">
-      <Header setIsAuthorized={setIsAuthorized} isAuthorized={isAuthorized} logout={logout} />
       <h1>Welcome, {username || 'Loading...'}</h1>
       <div className="p-event-list">
         {events.length > 0 ? (
@@ -100,6 +101,7 @@ const ProfileHome: React.FC = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

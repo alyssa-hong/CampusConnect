@@ -17,13 +17,13 @@ body {
 
 .profile-home {
   background-color: #d1cbcb7a;
-  margin: 70px;
-  padding: 10px;
+  padding: 20px; 
   display: flex;
   border-radius: 20px;
   flex-direction: column;
   align-items: center;
   min-height: calc(100vh - 50px);
+  margin-top: 70px; 
 }
 
 h1 {
@@ -89,12 +89,14 @@ h1 {
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.edit-button, .delete-button {
-  background-color: #f44336;;
+.edit-button,
+.delete-button {
+  background-color: #f44336;
   color: white;
 }
 
-.edit-button:hover, .delete-button:hover {
+.edit-button:hover,
+.delete-button:hover {
   background-color: #e53935;
   transform: scale(1.05);
 }

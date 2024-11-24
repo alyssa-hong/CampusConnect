@@ -1,75 +1,59 @@
 .header {
-  background-color: #e82f2f; 
-  color: #2e2e2e;
-  position: fixed; 
+  position: static; 
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
+  color: #ffffff;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   box-sizing: border-box;
-  overflow: hidden;
 }
 
 .header-left,
 .header-right {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.header-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 1;
-  text-align: center;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.header-logo {
-  margin-right: 8px;
-  height: 40px;
-  width: 40px;
-}
-
-.header-center h1 {
-  font-size: 2.5rem;
-  margin: 0;
-}
-
-.header-center h1 a {
-  color: rgba(255, 255, 255, 0.662);
-  text-decoration: none;
-}
-
-.header-center h1 a:hover,
-.header-center h1 a:focus {
-  color: rgba(255, 255, 255, 0.932);
-}
-
-.header-left {
+  flex: 1; 
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
 
 .header-right {
-  display: flex;
-  align-items: center;
   justify-content: flex-end;
 }
 
-.header button a {
-  text-decoration: none;
-  color: inherit;
+.header-center {
+  flex: 2; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
+.header-logo {
+  height: 40px;
+  width: 40px;
+  margin-right: 10px;
+}
+
+.header-center h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.727);
+}
+
+.header-center h1 a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.header-center h1 a:hover {
+  color: #ffffff;
+}
+
+/* Profile Button */
 .profile-button {
   background-color: #b20000d4;
   border: none;
@@ -108,9 +92,8 @@
   transform: scale(1.1);
 }
 
-.addevent-button,
+/* Logout Button */
 .logout-button {
-  margin: 5px;
   background-color: #b20000d4;
   border: none;
   padding: 8px 12px;
@@ -121,30 +104,53 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.addevent-button:hover,
 .logout-button:hover {
   background-color: #ff000058;
   transform: scale(1.1);
 }
 
-.header a {
-  text-decoration: none;
-  color: inherit;
+@media (max-width: 768px) {
+  .header-center h1 {
+    font-size: 2rem;
+  }
+
+  .header-logo {
+    height: 30px;
+    width: 30px;
+  }
+
+  .profile-button {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .settings-button,
+  .logout-button {
+    font-size: 0.9rem;
+    padding: 6px 10px;
+  }
 }
 
-.header-button {
-  background-color: #b20000d4;
-  border: none;
-  padding: 8px 12px;
-  color: white;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right: 10px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
+@media (max-width: 480px) {
+  .header-center h1 {
+    font-size: 1.8rem;
+  }
 
-.header-button:hover {
-  background-color: #ff000058;
-  transform: scale(1.1);
+  .header-logo {
+    height: 25px;
+    width: 25px;
+  }
+
+  .profile-button {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+
+  .settings-button,
+  .logout-button {
+    font-size: 0.8rem;
+    padding: 5px 8px;
+  }
 }
