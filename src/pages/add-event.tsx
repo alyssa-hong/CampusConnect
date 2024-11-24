@@ -149,6 +149,7 @@ const AddEventPage: React.FC = () => {
                   <img src={imagePreview} alt="Event Preview" />
                   <button
                     type="button"
+                    className="remove-image-button"
                     onClick={() => {
                       setEventImage(null);
                       setImagePreview(null);
@@ -158,11 +159,18 @@ const AddEventPage: React.FC = () => {
                   </button>
                 </div>
               ) : (
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                />
+                <div className="upload-placeholder">
+                  <label htmlFor="eventImage" className="upload-label">
+                    Click to upload an image
+                  </label>
+                  <input
+                    id="eventImage"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden-input"
+                  />
+                </div>
               )}
             </div>
           </div>
