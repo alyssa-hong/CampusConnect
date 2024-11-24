@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import Header from '../components/Header/Header'; // Make sure to import Header component
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import Header from '../components/Header/Header'; // Import Header component
 import '../styles/Profile.css';
 
 const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateAction<boolean>> }> = ({ setIsAuthorized }) => {
@@ -41,7 +43,7 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
           lastName: data.lastName || '',
           userName: data.userName || '',
           email: data.email || '',
-          password: '', // Don't display password initially for security
+          password: '', // Don't display password initially
         });
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -63,16 +65,15 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
 
   const handleSaveChanges = async (e: React.FormEvent) => {
     e.preventDefault();
-  
-    // Prepare data to be sent to the server
+
     const updatedUserData = {
       firstName: formData.firstName,
       lastName: formData.lastName,
       userName: formData.userName,
       email: formData.email,
-      password: formData.password,  // Include password if it's being updated
+      password: formData.password, // Include password if updated
     };
-  
+
     try {
       const res = await fetch('/api/updateUser', {
         method: 'POST',
@@ -81,21 +82,19 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
         },
         body: JSON.stringify(updatedUserData),
       });
-  
+
       if (res.ok) {
-        const data = await res.json();
-        console.log('User updated successfully:', data);
-        // Optionally, you could add a success message to display to the user
+        console.log('User updated successfully');
+        // Redirect to homepage after successful save
+        router.push('/');
       } else {
         const errorData = await res.json();
         console.error('Error updating user:', errorData.message);
-        // Optionally, you could add an error message to display to the user
       }
     } catch (error) {
       console.error('Error saving user data:', error);
     }
   };
-  
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -109,8 +108,8 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
   };
 
   const logout = async () => {
-    await signOut(); // This will log the user out
-    router.push('/'); // Redirect to home page after logging out
+    await signOut();
+    router.push('/');
   };
 
   if (loading) return <p>Loading...</p>;
@@ -118,12 +117,8 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
   return (
     <div>
       {/* Include Header with isAuthorized and logout functions */}
-      <Header 
-        setIsAuthorized={setIsAuthorized} 
-        isAuthorized={!!session?.user} 
-        logout={logout} 
-      />
-      
+      <Header setIsAuthorized={setIsAuthorized} isAuthorized={!!session?.user} logout={logout} />
+
       <main className="profileSection">
         <div className="profileBox">
           <h2 className="title">Profile Details</h2>
@@ -216,10 +211,10 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
                 />
                 <button
                   type="button"
-                  className="showPasswordButton"
+                  className="iconButton"
                   onClick={togglePasswordVisibility}
                 >
-                  {passwordVisible ? 'Hide' : 'Show'}
+                  <FontAwesomeIcon icon={passwordVisible ? faEyeSlash : faEye} />
                 </button>
                 <button
                   type="button"

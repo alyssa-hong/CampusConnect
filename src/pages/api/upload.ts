@@ -2,8 +2,8 @@ import multer from 'multer';
 import { NextApiRequest, NextApiResponse } from 'next';
 import path from 'path';
 import fs from 'fs';
+import { error } from 'console';
 
-// Multer configuration
 const upload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
@@ -17,6 +17,15 @@ const upload = multer({
       cb(null, `${Date.now()}-${file.originalname}`);
     },
   }),
+  fileFilter: (req, file, cb) => {
+    // Accept only jpeg and png file types
+    const allowedMimeTypes = ['image/jpeg', 'image/png'];
+    if (allowedMimeTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only JPEG and PNG images are allowed.'));
+    }
+  },
 });
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -24,7 +33,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     upload.single('eventImage')(req as any, {} as any, (err) => {
       if (err) {
         console.error('Upload error:', err);
-        return res.status(500).json({ error: `Upload error: ${err.message}` });
+        return res.status(400).json({ error: `Upload error: ${err.message}`  });
       }
 
       if (!(req as any).file) {

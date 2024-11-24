@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
-import Image from 'next/image';
 import '../styles/UnauthorizedPage.css';
 
 const UnauthorizedPage: React.FC = () => {
@@ -42,51 +42,17 @@ const UnauthorizedPage: React.FC = () => {
 
   return (
     <div>
-      {/* Reuse the Header component */}
       <Header isAuthorized={false} logout={logout} />
 
-      {/* Events Section */}
-      <h1 className="event-header">All Events</h1>
-      <p className="event-head">Here are all the events happening:</p>
-
-      <div className="event-list">
-        {/* Render events if available */}
-        {events.length > 0 ? (
-          events.map((event) => (
-            <div key={event._id} className="event-card">
-              <Image
-                src={event.eventImage || 'https://via.placeholder.com/250x150'}
-                alt={event.eventName}
-                width={250}
-                height={150}
-                className="event-image"
-              />
-              <h3>
-                <strong>Title:</strong> {event.eventName}
-              </h3>
-              <p>
-                <strong>
-                  Event Date: {new Date(event.eventDate).toLocaleDateString()} at{' '}
-                  {event.eventTime}
-                </strong>
-              </p>
-              <p>
-                <strong>Description:</strong> {event.eventDescription}
-              </p>
-              <p>
-                <strong>Submitted by:</strong> {event.user}
-              </p>
-              <p>
-                <strong>Contact:</strong> {event.contactInfo}
-              </p>
-              <p>
-                <strong>Location:</strong> {event.location}
-              </p>
-            </div>
-          ))
-        ) : (
-          <p>Loading events...</p>
-        )}
+      {/* Hero Section */}
+      <div className="hero">
+        <div className="hero-content">
+          <h1>Connect with Your Campus Community!</h1>
+          <p>Discover events, meet people, and make the most of your college life.</p>
+          <button className="cta-button" onClick={() => router.push('/signup')}>
+            Join the Community
+          </button>
+        </div>
       </div>
 
       <Footer />

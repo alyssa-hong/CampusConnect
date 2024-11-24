@@ -2,6 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons'; // Import the user icon
 import './Header.css';
 
 interface HeaderProps {
@@ -11,16 +13,16 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ isAuthorized, logout }) => {
   const router = useRouter();
-  const isProfilePage = router.pathname === '/profile-home';
 
   return (
     <header className="header">
       <div className="header-left">
         {isAuthorized && (
           <>
+            {/* Replace Profile Home button with User Icon */}
             <Link href="/profile-home">
-              <button className="profile-button">
-                <span>Profile Home</span>
+              <button className="icon-button profile-button">
+                <FontAwesomeIcon icon={faUser} />
               </button>
             </Link>
             <Link href="/profile">

@@ -8,106 +8,119 @@ body {
   background-attachment: fixed;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
+  color: #fff;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-
 .profile-home {
+  background-color: #d1cbcb7a;
+  margin: 70px;
+  padding: 10px;
   display: flex;
+  border-radius: 20px;
   flex-direction: column;
-  justify-content: flex-start; 
   align-items: center;
-  min-height: calc(100vh - 50px); 
-  padding: 20px;
-  box-sizing: border-box;
+  min-height: calc(100vh - 50px);
 }
 
 h1 {
-  text-align: center;
   font-size: 2.5rem;
   margin-top: 50px;
-  color: #fff; 
+  text-align: center;
 }
 
-.card-box {
-  background-color: rgba(250, 149, 149, 0.943); 
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.p-event-list {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
   width: 100%;
-  max-width: 800px;
+}
+
+.p-event-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  margin-top: 20px;
-  overflow-y: auto; 
-  max-height: 60vh; 
+  gap: 10px;
+  transition: transform 0.2s, box-shadow 0.3s;
 }
 
-.card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
+.p-event-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-.card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.p-event-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
 }
 
-.card h3 {
-  font-size: 1.2rem;
-  color: #333;
-}
-
-.card p {
+.p-event-card p {
   font-size: 1rem;
-  color: #555;
+  line-height: 1.5;
   margin: 0;
 }
 
+.p-event-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.edit-button,
 .delete-button {
-  background-color: rgb(255, 65, 65);
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 40px;
+  flex: 1;
+  padding: 10px;
   font-size: 1rem;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.delete-button:hover {
-  background-color: rgba(255, 65, 65, 0.705);
+.edit-button, .delete-button {
+  background-color: #f44336;;
+  color: white;
+}
+
+.edit-button:hover, .delete-button:hover {
+  background-color: #e53935;
   transform: scale(1.05);
 }
 
+.no-event {
+  font-size: 1.2rem;
+  color: #ffffff;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.loading {
+  font-size: 1.5rem;
+  color: #fff;
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   h1 {
     font-size: 2rem;
   }
 
-  .card-box {
-    max-height: 50vh;
-  }
-
-  .card {
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
-  }
-
-  .delete-button {
-    width: 100%;
-    text-align: center;
+  .p-event-card {
+    max-width: 100%;
   }
 }
 
@@ -116,12 +129,9 @@ h1 {
     font-size: 1.8rem;
   }
 
-  .card-box {
-    padding: 20px;
-  }
-
+  .edit-button,
   .delete-button {
-    padding: 8px 16px;
+    padding: 8px;
     font-size: 0.9rem;
   }
 }
