@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
       'upload.wikimedia.org',
       'www.hubspot.com',
       'via.placeholder.com',
+      'campusconnectaws.s3.us-east-2.amazonaws.com'
     ],
     remotePatterns: [
       {

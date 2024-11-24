@@ -98,7 +98,7 @@ const AddEventPage: React.FC = () => {
         throw new Error(`Image upload failed: ${errorData.error}`);
       }
 
-      const { filePath } = await uploadRes.json();
+      const { s3Url } = await uploadRes.json();
 
       // Prepare event data
       const eventData = {
@@ -107,7 +107,7 @@ const AddEventPage: React.FC = () => {
         eventTime,
         eventTime24: formattedTime,
         eventDescription,
-        eventImage: filePath, // Save relative path returned by the backend
+        eventImage: s3Url, // Save relative path returned by the backend
         user: userName,
         contactInfo,
         location,
