@@ -2,8 +2,8 @@ import multer from 'multer';
 import { NextApiRequest, NextApiResponse } from 'next';
 import path from 'path';
 import fs from 'fs';
-import { error } from 'console';
 
+// Multer configuration for local storage
 const upload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
@@ -18,7 +18,6 @@ const upload = multer({
     },
   }),
   fileFilter: (req, file, cb) => {
-    // Accept only jpeg and png file types
     const allowedMimeTypes = ['image/jpeg', 'image/png'];
     if (allowedMimeTypes.includes(file.mimetype)) {
       cb(null, true);
@@ -28,28 +27,35 @@ const upload = multer({
   },
 });
 
+// API handler
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
+    // Use multer to handle the file upload
     upload.single('eventImage')(req as any, {} as any, (err) => {
       if (err) {
         console.error('Upload error:', err);
-        return res.status(400).json({ error: `Upload error: ${err.message}`  });
+        return res.status(400).json({ error: `Upload error: ${err.message}` });
       }
 
-      if (!(req as any).file) {
+      const file = (req as any).file;
+
+      if (!file) {
         return res.status(400).json({ error: 'No file uploaded.' });
       }
 
+      console.log('Uploaded file path:', file.path);
+
       res.status(200).json({
-        filePath: `/uploads/${(req as any).file.filename}`,
+        filePath: `/uploads/${file.filename}`,
         message: 'File uploaded successfully',
-      });      
+      });
     });
   } else {
     res.status(405).json({ error: `Method ${req.method} is not allowed.` });
   }
 };
 
+// Disable Next.js body parser for multer
 export const config = {
   api: {
     bodyParser: false,

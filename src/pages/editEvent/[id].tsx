@@ -118,12 +118,13 @@ const EditEventPage = () => {
   }
 
   return (
+    <>
+    <Header
+    setIsAuthorized={setIsAuthorized}
+    isAuthorized={isAuthorized}
+    logout={logout}
+  />
     <div className="edit-event-page">
-      <Header
-        setIsAuthorized={setIsAuthorized}
-        isAuthorized={isAuthorized}
-        logout={logout}
-      />
       <h1>Edit Event</h1>
       <form onSubmit={handleSubmit} className="event-form">
         <div className="form-group">
@@ -184,6 +185,7 @@ const EditEventPage = () => {
         </button>
       </form>
     </div>
+    </>
   );
 };
 
