@@ -1,110 +1,148 @@
-.home-link {
-    color: inherit;
-    text-decoration: none;
+/* General Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.home-link:hover {
-    color: black;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-}
-
-.topBar {
-    width: 100%;
-    margin: 0;
-    background-color: #fe5c5b; 
-    color: white; 
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-
-}
-
-.greeting {
-    font-size: 20px;
-    margin-left: 1em;
-}
-
-
-.actions {
-    display: flex;
-    gap: 10px;
-}
-
-.button {
-    margin-right: 1em;
-    padding: 8px 16px;
-    font-size: 20px;
-    color: #fe5c5b;
-    background-color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-.button:hover {
-    cursor: pointer;  
-}
-
+/* Profile Section */
 .profileSection {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
-    width: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
 }
 
 .profileBox {
-    background-color: white;
-    padding: 60px 40px;
-    width: 500px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  margin-top: 50px;
+  background-color: #fdfdfd78;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 100%;
+  max-width: 500px;
 }
 
 .title {
-    text-align: center;
-    color: #fe5c5b;
-    margin-bottom: 40px;
-    font-size: 24px;
+  font-size: 1.8rem;
+  color: #b20000d4;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
-.profileForm {
-    display: flex;
-    flex-direction: column;
+/* Form Styles */
+.formGroup {
+  margin-bottom: 20px;
 }
 
-.label {
-    margin: 20px 0 8px;
-    color: #fe5c5b;
-    font-weight: bold;
+.formGroup label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 1rem;
+  font-weight: bold;
 }
 
-.input {
-    width: 90%;
-    padding: 12px;
-    font-size: 16px;
-    border: 2px solid #fe5c5b;
-    border-radius: 6px;
-    outline: none;
-    transition: border-color 0.3s;
-    margin-bottom: 10px;
+.inputContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Input Field Styles */
+input {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:disabled {
+  background-color: #f0f0f0;
+  color: #777;
+}
+
+input:focus {
+  border-color: #ff8787;
+  box-shadow: 0 0 5px rgba(254, 92, 91, 0.5);
+}
+
+/* Button Styles */
+.editButton,
+.saveButton {
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.editButton {
+  background-color: #b20000d4;
+  color: white;
+}
+
+.editButton:hover {
+  background-color: #970000;
+  transform: scale(1.05);
 }
 
 .saveButton {
-    width: 95%;
-    padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    background-color: #fe5c5b;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 20px;
+  background-color: #b20000d4;
+  color: white;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.saveButton:hover {
+  background-color: #970000;
+  transform: scale(1.05);
+}
+
+/* Icon Button Styles */
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 1.2rem;
+  color: #b20000d4;
+  transition: transform 0.2s, color 0.3s;
+}
+
+.iconButton:hover {
+  transform: scale(1.2);
+  color: #970000;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .profileBox {
+    padding: 20px;
+  }
+
+  input {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .editButton,
+  .saveButton {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+  }
+
+  .iconButton {
+    font-size: 1rem;
+  }
 }

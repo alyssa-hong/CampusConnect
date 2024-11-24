@@ -15,8 +15,6 @@ const AddEventPage: React.FC = () => {
   const [userName, setUserName] = useState<string | null>(null);
   const [contactInfo, setContactInfo] = useState<string>('');
   const [location, setLocation] = useState('');
-  const [uploadedImageId, setUploadedImageId] = useState<string | null>(null);
-  const [isAuthorized, setIsAuthorized] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
@@ -54,49 +52,39 @@ const AddEventPage: React.FC = () => {
     }
   };
 
-  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEventTime(e.target.value);
-  };
-
   const convertTo24HourFormat = (time: string) => {
-    const regex = /^(0?[1-9]|1[0-2]):([0-5][0-9]) (AM|PM)$/;
-    const match = time.match(regex);
+    const regex = /^(\d{1,2}):(\d{2})\s?(AM|PM)$/i;
+    const match = time.trim().match(regex);
 
-    if (match) {
-      let [_, hour, minute, period] = match;
-      hour = parseInt(hour);
-      minute = parseInt(minute);
-
-      if (period === 'PM' && hour !== 12) {
-        hour += 12; // Convert PM hours to 24-hour format
-      } else if (period === 'AM' && hour === 12) {
-        hour = 0; // Convert 12 AM to 00
-      }
-
-      return `${hour}:${minute < 10 ? '0' + minute : minute}`; // Return the formatted time
-    } else {
-      return ''; // Return an empty string if the format is incorrect
+    if (!match) {
+      throw new Error('Invalid time format. Please use hh:mm AM/PM.');
     }
+
+    let [_, hour, minute, period] = match;
+    hour = parseInt(hour, 10);
+
+    if (period.toUpperCase() === 'PM' && hour !== 12) {
+      hour += 12; // Convert PM to 24-hour format
+    } else if (period.toUpperCase() === 'AM' && hour === 12) {
+      hour = 0; // Convert 12 AM to 00
+    }
+
+    return `${hour.toString().padStart(2, '0')}:${minute}`;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Ensure the event time is in the correct format and contains AM/PM
-    const formattedTime = convertTo24HourFormat(eventTime);
-    if (!formattedTime) {
-      alert('Please enter a valid time in the format "hh:mm AM/PM".');
-      return;
-    }
+    try {
+      // Check if image is uploaded
+      if (!eventImage) {
+        alert('Please upload an image for the event.');
+        return;
+      }
 
-    if (!session?.user?.email || !userName) {
-      alert('You must be logged in to create an event.');
-      return;
-    }
+      const formattedTime = convertTo24HourFormat(eventTime);
 
-    let uploadedImagePath = null;
-
-    if (eventImage) {
+      let uploadedImagePath = null;
       const formData = new FormData();
       formData.append('eventImage', eventImage);
 
@@ -107,43 +95,42 @@ const AddEventPage: React.FC = () => {
 
       if (!uploadRes.ok) {
         const errorData = await uploadRes.json();
-        console.error('Upload failed:', errorData);
-        alert('Image upload failed: ' + errorData.error);
-        return;
+        throw new Error(`Image upload failed: ${errorData.error}`);
       }
 
-      const data = await uploadRes.json();
-      uploadedImagePath = data.fileId;
-    }
+      const { filePath } = await uploadRes.json();
+      uploadedImagePath = filePath;
 
-    const eventData = {
-      eventName,
-      eventDate,
-      eventTime, // Keep the original AM/PM format here for display
-      eventTime24: formattedTime, // Store the 24-hour format for processing or display purposes
-      eventDescription,
-      eventImage: uploadedImageId,
-      user: userName,
-      contactInfo,
-      location,
-    };
+      const eventData = {
+        eventName,
+        eventDate,
+        eventTime,
+        eventTime24: formattedTime,
+        eventDescription,
+        eventImage: uploadedImagePath,
+        user: userName,
+        contactInfo,
+        location,
+      };
 
-    const res = await fetch('/api/events', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(eventData),
-    });
+      const res = await fetch('/api/events', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(eventData),
+      });
 
-    if (res.ok) {
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'Failed to create event.');
+      }
+
       router.push('/home');
-    } else {
-      const errorData = await res.json();
-      alert(`Error: ${errorData.error || 'Error adding event.'}`);
+    } catch (error) {
+      alert(error.message);
     }
   };
 
   const logout = async () => {
-    setIsAuthorized(false);
     await signOut({ callbackUrl: '/' });
   };
 
@@ -153,10 +140,8 @@ const AddEventPage: React.FC = () => {
 
   return (
     <div className="add-event-page">
-      <Header setIsAuthorized={setIsAuthorized} isAuthorized={isAuthorized} logout={logout} />
-
-      <h1>Add New Event</h1>
-      <form onSubmit={handleSubmit} className="event-form" encType="multipart/form-data">
+      <Header isAuthorized={!!session?.user} logout={logout} />
+      <form onSubmit={handleSubmit} className="event-form">
         <div className="form-group">
           <label>Event Image</label>
           <div className="image-upload">
@@ -216,9 +201,11 @@ const AddEventPage: React.FC = () => {
           <input
             type="text"
             value={eventTime}
-            onChange={handleTimeChange}
+            onChange={(e) => setEventTime(e.target.value)}
             required
-            placeholder="Enter time in format hh:mm AM/PM"
+            placeholder="e.g., 2:30 PM"
+            pattern="^([1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$"
+            title="Please enter a valid time in the format hh:mm AM/PM (e.g., 2:30 PM)"
           />
         </div>
 
@@ -236,7 +223,6 @@ const AddEventPage: React.FC = () => {
           <input
             type="text"
             value={contactInfo}
-            required
             readOnly
           />
         </div>

@@ -1,82 +1,137 @@
-/* Profile Page Styles */
-.profile-home {
+body {
+  background-image: 
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), 
+    url('/athens.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  color: #fff;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Align items at the top */
+  min-height: 100vh;
+}
+
+.profile-home {
+  background-color: #d1cbcb7a;
+  margin: 70px;
+  padding: 10px;
+  display: flex;
+  border-radius: 20px;
+  flex-direction: column;
   align-items: center;
-  height: 100vh; 
-  background-color: #646464;
-  padding: 20px;
-  box-sizing: border-box; /* Include padding in element's total width and height */
+  min-height: calc(100vh - 50px);
 }
 
 h1 {
-  text-align: center;
   font-size: 2.5rem;
-  margin-bottom: 20px;
-  color: #2e2e2e;
+  margin-top: 50px;
+  text-align: center;
 }
 
-/* Card Box */
-.card-box {
-  background-color: #fa9595;
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.p-event-list {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
   width: 100%;
-  max-width: 800px;
+}
+
+.p-event-card {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  margin-top: 20px; /* Add spacing below the header */
-  overflow-y: auto; /* Ensure content can scroll if necessary */
+  gap: 10px;
+  transition: transform 0.2s, box-shadow 0.3s;
 }
 
-/* Card */
-.card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.p-event-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Delete Button */
-.delete-button {
-  background-color: rgb(255, 65, 65);
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 40px;
+.p-event-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.p-event-card p {
   font-size: 1rem;
-  cursor: pointer;
+  line-height: 1.5;
+  margin: 0;
 }
 
-.delete-button:hover {
-  background-color: rgba(255, 65, 65, 0.705);
-}
-
-/* Header styles */
-.header {
-  position: sticky;
-  top: 0;
-  padding: 10px 10px;
-  width: 100%;
-  z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.header-left,
-.header-center,
-.header-right {
+.p-event-actions {
   display: flex;
-  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.header-logo {
-  margin-right: 10px;
+.edit-button,
+.delete-button {
+  flex: 1;
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+.edit-button, .delete-button {
+  background-color: #f44336;;
+  color: white;
+}
 
+.edit-button:hover, .delete-button:hover {
+  background-color: #e53935;
+  transform: scale(1.05);
+}
+
+.no-event {
+  font-size: 1.2rem;
+  color: #ffffff;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.loading {
+  font-size: 1.5rem;
+  color: #fff;
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .p-event-card {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .edit-button,
+  .delete-button {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+}

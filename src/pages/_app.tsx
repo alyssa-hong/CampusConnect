@@ -4,6 +4,9 @@ import { useRouter } from 'next/router';
 import Header from '../components/Header/Header';
 import { SessionProvider } from 'next-auth/react'; // Import SessionProvider
 import '../styles/App.css';
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+config.autoAddCss = false; 
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isAuthorized, setIsAuthorized] = useState(false);

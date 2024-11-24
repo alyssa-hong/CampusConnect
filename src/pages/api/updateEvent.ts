@@ -1,7 +1,7 @@
 // pages/api/updateEvent.ts
 import { NextApiRequest, NextApiResponse } from 'next';
-import connectMongoDB from '../../libs/mongodb'; // MongoDB connection utility
-import Event from '../../models/events'; // Assuming you have an Event model
+import connectMongoDB from '../../libs/mongodb'; 
+import Event from '../../models/events'; 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'PUT') {
