@@ -113,11 +113,11 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
 
   return (
     <>
+      <div className="auth-card">
       <div className="title">
         <h1>Welcome to Campus Connect!</h1>
       </div>
-      <div className="auth-card">
-        <h1>Sign Up</h1>
+        <h2>Sign Up</h2>
         <form onSubmit={handleSignup}>
           <div className="input-box">
             <label htmlFor="firstName">First Name</label>
