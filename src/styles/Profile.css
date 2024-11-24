@@ -1,135 +1,148 @@
+/* General Styles */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9; 
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  .profileSection {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
-  }
-  
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Profile Section */
+.profileSection {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.profileBox {
+  margin-top: 50px;
+  background-color: #fdfdfd78;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.title {
+  font-size: 1.8rem;
+  color: #b20000d4;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Form Styles */
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Input Field Styles */
+input {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:disabled {
+  background-color: #f0f0f0;
+  color: #777;
+}
+
+input:focus {
+  border-color: #ff8787;
+  box-shadow: 0 0 5px rgba(254, 92, 91, 0.5);
+}
+
+/* Button Styles */
+.editButton,
+.saveButton {
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.editButton {
+  background-color: #b20000d4;
+  color: white;
+}
+
+.editButton:hover {
+  background-color: #970000;
+  transform: scale(1.05);
+}
+
+.saveButton {
+  background-color: #b20000d4;
+  color: white;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.saveButton:hover {
+  background-color: #970000;
+  transform: scale(1.05);
+}
+
+/* Icon Button Styles */
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 1.2rem;
+  color: #b20000d4;
+  transition: transform 0.2s, color 0.3s;
+}
+
+.iconButton:hover {
+  transform: scale(1.2);
+  color: #970000;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
   .profileBox {
-    margin-top: 50px;
-    background-color: #fdfdfd78;
-    border-radius: 12px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    width: 100%;
-    max-width: 500px;
+    padding: 20px;
   }
-  
-  .title {
-    font-size: 1.8rem;
-    color: #b20000d4;
-    text-align: center;
-    margin-bottom: 20px;
-    font-weight: bold;
-  }
-  
-  .formGroup {
-    margin-bottom: 20px;
-  }
-  
-  .formGroup label {
-    display: block;
-    margin-bottom: 8px;
-    color: #333;
-    font-size: 1rem;
-    font-weight: bold;
-  }
-  
-  .inputContainer {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
+
   input {
-    flex: 1;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-  
-  input:disabled {
-    background-color: #f0f0f0;
-    color: #777;
-  }
-  
-  input:focus {
-    border-color: #ff8787;
-    box-shadow: 0 0 5px rgba(254, 92, 91, 0.5);
-  }
-  
-  .editButton,
-  .showPasswordButton,
-  .saveButton {
-    padding: 10px 16px;
     font-size: 0.9rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    padding: 10px;
   }
-  
-  .editButton {
-    background-color: #b20000d4;
-    color: white;
-  }
-  
-  .editButton:hover {
-    background-color: #970000;
-    transform: scale(1.05);
-  }
-  
-  .showPasswordButton {
-    background-color: #b20000d4;
-    color: #ffffff;
-  }
-  
-  .showPasswordButton:hover {
-    background-color: #970000;
-    transform: scale(1.05);
-  }
-  
+
+  .editButton,
   .saveButton {
-    background-color: #b20000d4;
-    color: white;
-    width: 100%;
-    margin-top: 20px;
+    font-size: 0.85rem;
+    padding: 8px 12px;
   }
-  
-  .saveButton:hover {
-    background-color: #970000;
-    transform: scale(1.05);
+
+  .iconButton {
+    font-size: 1rem;
   }
-  
-  @media (max-width: 600px) {
-    .profileBox {
-      padding: 20px;
-    }
-  
-    input {
-      font-size: 0.9rem;
-      padding: 10px;
-    }
-  
-    .editButton,
-    .showPasswordButton,
-    .saveButton {
-      font-size: 0.85rem;
-      padding: 8px 12px;
-    }
-  }
-  
+}

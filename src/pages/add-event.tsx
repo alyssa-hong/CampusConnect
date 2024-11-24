@@ -203,9 +203,9 @@ const AddEventPage: React.FC = () => {
             value={eventTime}
             onChange={(e) => setEventTime(e.target.value)}
             required
-            placeholder="e.g., 02:30 PM"
+            placeholder="e.g., 2:30 PM"
             pattern="^([1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$"
-            title="Please enter a valid time in the format hh:mm AM/PM (e.g., 02:30 PM)"
+            title="Please enter a valid time in the format hh:mm AM/PM (e.g., 2:30 PM)"
           />
         </div>
 

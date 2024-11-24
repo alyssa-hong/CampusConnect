@@ -12,11 +12,11 @@ const EditEventPage = () => {
     eventDate: '',
     eventTime: '',
     eventDescription: '',
-    location: '', // Corrected to match schema
+    location: '', 
   });
 
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true); 
   const [error, setError] = useState<string | null>(null);
 
   // Mock logout function (replace with actual logic)
@@ -26,9 +26,9 @@ const EditEventPage = () => {
   };
 
   useEffect(() => {
-    // Check if user is authorized (replace with actual auth logic)
+    // Check if user is authorized
     const checkAuthorization = async () => {
-      const isAuth = true; // Replace with your auth logic
+      const isAuth = true; 
       setIsAuthorized(isAuth);
 
       if (!isAuth) {
