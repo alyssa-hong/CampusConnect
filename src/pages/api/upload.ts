@@ -43,7 +43,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(200).json({
         filePath: `/uploads/${(req as any).file.filename}`,
         message: 'File uploaded successfully',
-      });
+      });      
     });
   } else {
     res.status(405).json({ error: `Method ${req.method} is not allowed.` });

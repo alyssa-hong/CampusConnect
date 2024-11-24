@@ -47,7 +47,7 @@ main {
   gap: 20px;
   justify-content: center;
   margin-top: 20px;
-  padding: 0 10px; /* Add slight padding for better layout */
+  padding: 0 10px; 
 }
 
 .event-card {
@@ -57,7 +57,7 @@ main {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 250px;
-  text-align: center; /* Ensure consistent alignment */
+  text-align: center; 
 }
 
 .event-card img {
@@ -75,13 +75,13 @@ main {
 .event-card h3 {
   font-size: 1.2rem;
   margin: 10px 0;
-  color: #333; /* Darker text for better readability */
+  color: #333; 
 }
 
 .event-card p {
   color: #555;
   font-size: 0.9rem;
-  margin: 5px 0; /* Consistent spacing for paragraphs */
+  margin: 5px 0; 
 }
 
 .add-event-button {

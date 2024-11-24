@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import Header from '../components/Header/Header';
-import { SessionProvider } from 'next-auth/react'; // Import SessionProvider
+import { SessionProvider } from 'next-auth/react'; 
 import '../styles/App.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
