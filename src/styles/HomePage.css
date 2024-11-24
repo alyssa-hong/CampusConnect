@@ -55,10 +55,16 @@ main {
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 250px;
-  text-align: center; /* Ensure consistent alignment */
+  width: 100%; 
+  max-width: 250px; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.event-card:hover {
+  transform: scale(1.05); /* Slightly enlarge the card */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add a deeper shadow */
+}
+
 
 .event-card img {
   width: 100%;
