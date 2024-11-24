@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSession, signOut } from 'next-auth/react'; 
 import Header from '@/components/Header/Header'; // Adjust the path as needed
+import './editEvent.css';
+
 
 const EditEventPage = () => {
   const router = useRouter();

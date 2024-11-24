@@ -25,6 +25,7 @@
 
 
 .about-container {
+<<<<<<< Updated upstream
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -43,5 +44,29 @@
     text-align: center;
   }
   
+=======
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('/public/athens.jpg'); 
+  background-size: cover; 
+  background-position: center; 
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+
+.about-card {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 800px;
+  text-align: center;
+  margin-top: 70px;
+}
+>>>>>>> Stashed changes
 
 

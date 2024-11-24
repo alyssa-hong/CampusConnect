@@ -1,4 +1,35 @@
+
+
+@keyframes backgroundFade {
+  0% {
+    background-image: 
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
+      url('/athens.jpg');
+  }
+  25% {
+    background-image: 
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
+      url('/thearchathens.png');
+  }
+  50% {
+    background-image: 
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
+      url('/ugacampusathens.jpg'); /* Add second image */
+  }
+  75% {
+    background-image: 
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
+      url('/mainlibathens.jpg'); /* Add third image */
+  }
+  100% {
+    background-image: 
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
+      url('/athens.jpg'); /* Loop back to first image */
+  }
+}
+
 body {
+<<<<<<< Updated upstream
   background-color: #6c1515; 
   background-image: 
   linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), 
@@ -14,6 +45,30 @@ body {
   font-family: Arial, sans-serif; 
 }
 
+=======
+  background-color: #646464;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  animation: backgroundFade 35s infinite ease-in-out; /* Animation lasts 15s and loops infinitely */
+}
+
+
+
+main {
+  flex: 1; 
+  padding: 100px 20px 80px; /* Add space for fixed header and footer (adjust as needed) */
+  box-sizing: border-box;
+}
+>>>>>>> Stashed changes
 
 .event-header {
   text-align: center;
@@ -29,6 +84,7 @@ body {
 }
 
 .event-list {
+<<<<<<< Updated upstream
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -62,6 +118,50 @@ body {
   
 .add-event-button {
   background-color: #d31111;
+=======
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center; 
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.event-card {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%; 
+  max-width: 250px; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-card:hover {
+  transform: scale(1.05); /* Slightly enlarge the card */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add a deeper shadow */
+}
+
+.event-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.event-card h3 {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.event-card p {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.add-event-button {
+  background-color: #d31111;
+  background-color: #b20000d4;
+>>>>>>> Stashed changes
   color: white;
   border: none;
   padding: 15px 30px;  
@@ -80,5 +180,47 @@ body {
 
 .add-event-button:hover {
   background-color: #ff758e;
+<<<<<<< Updated upstream
   transform: scale(1.1);
 }
+=======
+  background-color: #b2000094;
+  transform: scale(1.1);
+}
+
+.add-event-button:focus {
+  outline: 2px solid #ff758e;
+  outline: 2px solid #b20000d4;
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .event-list {
+    flex-direction: column;
+    align-items: center; 
+  }
+
+  .event-card {
+    width: 90%; 
+  }
+
+  .add-event-button {
+    width: 90%; 
+  }
+}
+
+@media (max-width: 480px) {
+  .event-header {
+    font-size: 1.2rem; 
+  }
+
+  .event-head {
+    font-size: 1rem;
+  }
+
+  .add-event-button {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+}
+>>>>>>> Stashed changes
