@@ -27,14 +27,12 @@ const nextConfig: NextConfig = {
   },
   transpilePackages: ['next-auth'],
   experimental: {
-    appDir: false, // Disable appDir if it's causing issues
+    turbo: {
+      rules: {},
+    },
   },
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = { fs: false }; // Fix `fs` module issues on the client side
-    }
-    return config;
-  },
+  
+
   env: {
     API_URL: process.env.API_URL, // Example environment variable
   },

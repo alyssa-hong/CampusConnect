@@ -1,159 +1,114 @@
 body {
-  background-color: #6c1515; 
   background-image: 
-  linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), 
-  url('/athens.jpg');
-
-  background-size: cover; 
-  background-position: center; 
-  background-repeat: no-repeat; 
-  background-attachment: fixed; 
-  min-height: 100vh; 
-  margin: 0; 
-  padding: 0; 
-  font-family: Arial, sans-serif; 
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)), 
+    url('/athens.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #fff;
 }
 
 .page-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; 
+  min-height: 100vh;
 }
 
 main {
-  flex: 1; 
-  padding: 100px 20px 120px; /* Add extra bottom padding to prevent overlap */
+  flex: 1;
+  padding: 60px 20px;
   box-sizing: border-box;
 }
 
-
-
 .event-header {
   text-align: center;
-  font-size: 1.5rem;
-  color: white;
-  margin: 20px 0 10px;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #ffffff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .event-head {
   text-align: center;
-  font-size: 1.3rem;
-  color: #ffffff;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #f0f0f0;
 }
 
 .event-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
   justify-content: center;
+  padding: 0 10px;
   margin-top: 20px;
-  padding: 0 10px; /* Add slight padding for better layout */
 }
 
 .event-card {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%; 
-  max-width: 250px; 
+  max-width: 280px;
+  text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .event-card:hover {
-  transform: scale(1.05); /* Slightly enlarge the card */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add a deeper shadow */
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
-
 
 .event-card img {
   width: 100%;
-  height: auto;
+  height: 150px;
+  object-fit: cover;
   border-radius: 8px;
-  margin-bottom: 10px; 
-  width: 250px; 
-  height: 150px; 
-  object-fit: cover; 
-  border-radius: 8px;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 
 .event-card h3 {
-  font-size: 1.2rem;
-  margin: 10px 0;
-  color: #333; /* Darker text for better readability */
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  color: #cb0c0c; 
 }
 
 .event-card p {
+  font-size: 1rem;
+  line-height: 1.5;
   color: #555;
-  font-size: 0.9rem;
-  margin: 5px 0; /* Consistent spacing for paragraphs */
+  margin: 5px 0;
 }
 
 .add-event-button {
-  background-color: #b20000d4;
+  display: block;
+  margin: 20px auto;
+  padding: 15px 40px;
+  font-size: 1rem;
+  background-color: #b20000b9; 
   color: white;
   border: none;
-  padding: 15px 30px;
-  border-radius: 50px;
+  border-radius: 30px;
   cursor: pointer;
-  margin-top: 20px;
-  display: block;
-  width: 250px;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 1.1rem;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  text-decoration: none;
 }
 
 .add-event-button:hover {
-  background-color: #b2000094;
-  transform: scale(1.1);
-}
-
-.add-event-button:focus {
-  outline: 2px solid #b20000d4;
-  transform: scale(1.1);
+  background-color: rgb(188, 26, 26)d4;
+  transform: scale(1.05);
 }
 
 @media (max-width: 768px) {
-  .event-list {
-    flex-direction: column;
-    align-items: center;
-    padding: 0; 
-  }
-
   .event-card {
-    width: 90%; 
+    max-width: 90%;
   }
 
   .add-event-button {
-    width: 90%; 
+    width: 80%;
   }
-}
-
-@media (max-width: 480px) {
-  .event-header {
-    font-size: 1.2rem; 
-  }
-
-  .event-head {
-    font-size: 1rem;
-  }
-
-  .add-event-button {
-    font-size: 1rem;
-    padding: 10px 20px;
-  }
-
-  .event-card img {
-    object-fit: cover;
-    height: 150px; 
-    width: 100%; 
-    border-radius: 8px;
-    margin-bottom: 10px;
-  }
-  
 }

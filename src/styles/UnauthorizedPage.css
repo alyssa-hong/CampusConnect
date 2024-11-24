@@ -51,65 +51,11 @@ body {
   background-color: #c80505;
 }
 
-.events-section {
-
-  padding: 40px 20px;
-  color: white;
-  text-align: center;
-}
-
-.events-section h2 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
-
-.event-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-
-.event-card {
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #333;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  max-width: 300px;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.event-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-}
-
-.event-card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-}
-
-.event-card p {
-  font-size: 1rem;
-  line-height: 1.5;
-  margin: 0;
-}
-
-.event-image {
-  border-radius: 8px;
-  object-fit: cover;
-}
-
 @media (max-width: 768px) {
   .hero-content h1 {
     font-size: 2rem;
   }
+}
 
   .hero-content p {
     font-size: 1.2rem;
@@ -120,7 +66,60 @@ body {
     padding: 8px 15px;
   }
 
-  .event-card {
-    width: 90%;
+  .u-events-section {
+    padding: 50px 20px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #f0f0f0;
   }
-}
+  
+  .u-events-section h2 {
+    font-size: 2.8rem;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  }
+  
+  .u-event-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    justify-content: center;
+  }
+  
+  .u-event-card {
+    position: relative;
+    background: linear-gradient(145deg, rgba(41, 41, 41, 0.733), rgba(255, 255, 255, 0.1));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.684);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #fff;
+    padding: 20px;
+  }
+  
+  .u-event-card:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  .u-event-image {
+    border-radius: 12px;
+    object-fit: cover;
+    height: 150px;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .u-event-card h3 {
+    font-size: 1.8rem;
+    margin: 10px 0;
+  }
+  
+  .u-event-card p {
+    font-size: 1rem;
+    margin: 5px 0;
+    color: rgba(255, 255, 255, 0.926);
+  }
+  

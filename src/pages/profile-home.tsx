@@ -68,7 +68,7 @@ const ProfileHome: React.FC = () => {
 
   return (
     <>
-    <Header setIsAuthorized={setIsAuthorized} isAuthorized={isAuthorized} logout={logout} />
+    <Header isAuthorized={isAuthorized} logout={logout} />
     <div className="profile-home">
       <h1>Welcome, {username || 'Loading...'}</h1>
       <div className="p-event-list">

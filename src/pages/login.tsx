@@ -24,11 +24,10 @@ const Login = () => {
     const credentials = { email, password };
 
     try {
-      // Call signIn from next-auth to authenticate the user
       const response = await signIn('credentials', {
         email,
         password,
-        redirect: false, // Prevent automatic redirection
+        redirect: false,
       });
 
       // If the response contains an error, display the error message
@@ -47,9 +46,12 @@ const Login = () => {
   };
 
   return (
+    <>
+    <div className='title'>
+    <h1>Welcome back to Campus Connect!</h1>
+    </div>
     <div className="auth-container">
       <div className="auth-card">
-        <h1 className="title">Welcome back to Campus Connect!</h1>
         <h2>Login</h2>
 
         {/* Login Form */}
@@ -104,6 +106,7 @@ const Login = () => {
         </p>
       </div>
     </div>
+    </>
   );
 };
 

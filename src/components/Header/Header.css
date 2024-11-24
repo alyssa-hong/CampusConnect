@@ -40,7 +40,7 @@
 .header-center h1 {
   font-size: 2.5rem;
   margin: 0;
-  color: rgba(255, 255, 255, 0.727);
+  color: rgb(255, 255, 255);
 }
 
 .header-center h1 a {
@@ -50,10 +50,9 @@
 }
 
 .header-center h1 a:hover {
-  color: #ffffff;
+  color: #ffffffa4;
 }
 
-/* Profile Button */
 .profile-button {
   background-color: #b20000d4;
   border: none;

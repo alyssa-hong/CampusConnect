@@ -25,6 +25,9 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
   });
   const router = useRouter();
 
+  // Determine if the user is authorized
+  const isAuthorized = status === 'authenticated';
+
   useEffect(() => {
     if (status === 'loading') return;
 
@@ -35,7 +38,7 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
 
     const fetchUserData = async () => {
       try {
-        const res = await fetch(`/api/getUser?email=${session.user.email}`);
+        const res = await fetch(`/api/eventsByUsername?email=${session.user.email!}`);
         if (!res.ok) throw new Error('Failed to fetch user data.');
         const data = await res.json();
         setFormData({
@@ -85,7 +88,6 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
 
       if (res.ok) {
         console.log('User updated successfully');
-        // Redirect to homepage after successful save
         router.push('/');
       } else {
         const errorData = await res.json();
@@ -117,7 +119,7 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
   return (
     <div>
       {/* Include Header with isAuthorized and logout functions */}
-      <Header setIsAuthorized={setIsAuthorized} isAuthorized={!!session?.user} logout={logout} />
+      <Header isAuthorized={isAuthorized} logout={logout} />
 
       <main className="profileSection">
         <div className="profileBox">

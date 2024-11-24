@@ -61,7 +61,7 @@ body {
 }
 
 .submit-button {
-  background-color: rgb(255, 65, 65);
+  background-color: #b20000d4;
   color: white;
   padding: 10px 16px;
   border: none;
@@ -72,7 +72,7 @@ body {
 }
 
 .submit-button:hover {
-  background-color: rgba(255, 65, 65, 0.705);
+  background-color: #b20000;
 }
 
 .image-upload {
@@ -93,13 +93,11 @@ body {
   max-height: 300px;
   border-radius: 8px;
   margin-bottom: 10px;
-  border: 2px solid #b20000d4;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .remove-image-button {
   margin-top: 10px;
-  background-color: #ff6565;
+  background-color: #b20000d4;
   color: white;
   border: none;
   border-radius: 8px;
@@ -110,7 +108,7 @@ body {
 }
 
 .remove-image-button:hover {
-  background-color: #ff4747;
+  background-color: #b20000;
   transform: scale(1.05);
 }
 

@@ -19,12 +19,18 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
 
   // State for errors and messages
   const [errors, setErrors] = useState<{
-    firstName?: string;
-    lastName?: string;
-    userName?: string;
-    email?: string;
-    password?: string;
-  }>({});
+    firstName: string;
+    lastName: string;
+    userName: string;
+    email: string;
+    password: string;
+  }>({
+    firstName: 'First Name is required.',
+    lastName: 'Last Name is required.',
+    userName: 'Username must be at least 6 characters long.',
+    email: 'Email is required.',
+    password: 'Password must be at least 6 characters long.',
+  });
   const [message, setMessage] = useState('');
 
   // General field validation function
@@ -32,20 +38,31 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
     switch (name) {
       case 'firstName':
       case 'lastName':
+        return value
+          ? 'Looks good!'
+          : `${name.charAt(0).toUpperCase() + name.slice(1)} is required.`;
+
       case 'userName':
-        return value ? '' : `${name.charAt(0).toUpperCase() + name.slice(1)} is required.`;
+        return value
+          ? value.length < 6
+            ? 'Username must be at least 6 characters long.'
+            : 'Username looks good!'
+          : 'Username is required.';
+
       case 'email':
         return value
           ? /\S+@\S+\.\S+/.test(value)
-            ? ''
+            ? 'Valid email!'
             : 'Please enter a valid email address.'
           : 'Email is required.';
+
       case 'password':
         return value
           ? value.length < 6
             ? 'Password must be at least 6 characters long.'
-            : ''
+            : 'Password is strong!'
           : 'Password is required.';
+
       default:
         return '';
     }
@@ -56,11 +73,25 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
     const { name, value } = e.target;
 
     // Update the field value
-    if (name === 'firstName') setFirstName(value);
-    if (name === 'lastName') setLastName(value);
-    if (name === 'userName') setUserName(value);
-    if (name === 'email') setEmail(value);
-    if (name === 'password') setPassword(value);
+    switch (name) {
+      case 'firstName':
+        setFirstName(value);
+        break;
+      case 'lastName':
+        setLastName(value);
+        break;
+      case 'userName':
+        setUserName(value);
+        break;
+      case 'email':
+        setEmail(value);
+        break;
+      case 'password':
+        setPassword(value);
+        break;
+      default:
+        break;
+    }
 
     // Validate the field and update errors
     const error = validateField(name, value);
@@ -70,9 +101,8 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
   // Handle form submission
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrors({});
     setMessage('');
-  
+
     const newErrors = {
       firstName: validateField('firstName', firstName),
       lastName: validateField('lastName', lastName),
@@ -80,12 +110,20 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
       email: validateField('email', email),
       password: validateField('password', password),
     };
-  
-    if (Object.values(newErrors).some((error) => error !== '')) {
+
+    if (
+      Object.values(newErrors).some(
+        (error) =>
+          error !== 'Looks good!' &&
+          error !== 'Username looks good!' &&
+          error !== 'Valid email!' &&
+          error !== 'Password is strong!'
+      )
+    ) {
       setErrors(newErrors);
       return;
     }
-  
+
     try {
       const res = await fetch('/api/signup', {
         method: 'POST',
@@ -94,13 +132,13 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
         },
         body: JSON.stringify({ firstName, lastName, userName, email, password }),
       });
-  
+
       const data = await res.json();
-      console.log(data); // Add this for debugging
-  
+      console.log(data); // For debugging
+
       if (res.ok) {
         setIsAuthorized(true);
-        router.push('/login'); // Redirect to home
+        router.push('/login'); // Redirect to login
       } else {
         setMessage(data.error || 'Something went wrong.');
       }
@@ -109,7 +147,6 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
       setMessage('An error occurred. Please try again.');
     }
   };
-  
 
   return (
     <>
@@ -128,8 +165,11 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
               placeholder="Enter your first name"
               value={firstName}
               onChange={handleChange}
+              className={errors.firstName === 'Looks good!' ? 'input-valid' : 'input-error'}
             />
-            {errors.firstName && <p className="error-text">{errors.firstName}</p>}
+            <p className={errors.firstName === 'Looks good!' ? 'valid-text' : 'error-text'}>
+              {errors.firstName}
+            </p>
           </div>
           <div className="input-box">
             <label htmlFor="lastName">Last Name</label>
@@ -140,8 +180,11 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
               placeholder="Enter your last name"
               value={lastName}
               onChange={handleChange}
+              className={errors.lastName === 'Looks good!' ? 'input-valid' : 'input-error'}
             />
-            {errors.lastName && <p className="error-text">{errors.lastName}</p>}
+            <p className={errors.lastName === 'Looks good!' ? 'valid-text' : 'error-text'}>
+              {errors.lastName}
+            </p>
           </div>
           <div className="input-box">
             <label htmlFor="userName">Username</label>
@@ -152,8 +195,17 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
               placeholder="Choose a username"
               value={userName}
               onChange={handleChange}
+              className={
+                errors.userName === 'Username looks good!' ? 'input-valid' : 'input-error'
+              }
             />
-            {errors.userName && <p className="error-text">{errors.userName}</p>}
+            <p
+              className={
+                errors.userName === 'Username looks good!' ? 'valid-text' : 'error-text'
+              }
+            >
+              {errors.userName}
+            </p>
           </div>
           <div className="input-box">
             <label htmlFor="email">Email</label>
@@ -164,8 +216,11 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
               placeholder="Enter your email"
               value={email}
               onChange={handleChange}
+              className={errors.email === 'Valid email!' ? 'input-valid' : 'input-error'}
             />
-            {errors.email && <p className="error-text">{errors.email}</p>}
+            <p className={errors.email === 'Valid email!' ? 'valid-text' : 'error-text'}>
+              {errors.email}
+            </p>
           </div>
           <div className="input-box">
             <label htmlFor="password">Password</label>
@@ -176,8 +231,17 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
               placeholder="Choose a password"
               value={password}
               onChange={handleChange}
+              className={
+                errors.password === 'Password is strong!' ? 'input-valid' : 'input-error'
+              }
             />
-            {errors.password && <p className="error-text">{errors.password}</p>}
+            <p
+              className={
+                errors.password === 'Password is strong!' ? 'valid-text' : 'error-text'
+              }
+            >
+              {errors.password}
+            </p>
           </div>
           <button className="auth-button signup-button" type="submit">
             Sign Up
@@ -185,8 +249,7 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
         </form>
         {message && <p className="message-text">{message}</p>}
         <p className="auth-link">
-          Already have an account?{' '}
-          <Link href="/login">Login</Link>
+          Already have an account? <Link href="/login">Login</Link>
         </p>
       </div>
     </>

@@ -51,6 +51,9 @@ const HomePage: React.FC = () => {
           {events.length > 0 ? (
             events.map((event) => (
               <div key={event._id} className="event-card">
+                {/* Ribbon for featured events */}
+                {event.isFeatured && <div className="ribbon">Featured</div>}
+
                 <Image
                   src={event.eventImage || 'https://via.placeholder.com/250x150'}
                   alt={event.eventName}
@@ -70,6 +73,7 @@ const HomePage: React.FC = () => {
             <p>{events.length === 0 ? 'No events found.' : 'Loading events...'}</p>
           )}
         </div>
+
 
         <Link href="/add-event">
           <button className="add-event-button" aria-label="Add a new event">Add Event</button>

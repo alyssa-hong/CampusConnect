@@ -54,37 +54,36 @@ const UnauthorizedPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Events Section */}
-      <div className="events-section">
-        <h2>Discover Events</h2>
-        <div className="event-list">
-          {events.length > 0 ? (
-            events.map((event) => (
-              <div key={event._id} className="event-card">
-                <Image
-                  src={event.eventImage || 'https://via.placeholder.com/250x150'}
-                  alt={event.eventName}
-                  width={250}
-                  height={150}
-                  className="event-image"
-                />
-                <h3>{event.eventName}</h3>
-                <p>
-                  <strong>Date:</strong> {new Date(event.eventDate).toLocaleDateString()} at{' '}
-                  {event.eventTime}
-                </p>
-                <p>
-                  <strong>Description:</strong> {event.eventDescription}
-                </p>
-                <p>
-                  <strong>Location:</strong> {event.location || 'Not provided'}
-                </p>
-              </div>
-            ))
-          ) : (
-            <p>No events found. Check back later!</p>
-          )}
-        </div>
+      <div className="u-event-list">
+        {events.length > 0 ? (
+          events.map((event) => (
+            <div key={event._id} className="u-event-card">
+              {/* Add a ribbon for "Featured" events */}
+              {event.isFeatured && <div className="ribbon">Featured</div>}
+              
+              <Image
+                src={event.eventImage || 'https://via.placeholder.com/250x150'}
+                alt={event.eventName}
+                width={250}
+                height={150}
+                className="u-event-image"
+              />
+              <h3>{event.eventName}</h3>
+              <p>
+                <strong>Date:</strong> {new Date(event.eventDate).toLocaleDateString()} at{' '}
+                {event.eventTime}
+              </p>
+              <p>
+                <strong>Description:</strong> {event.eventDescription}
+              </p>
+              <p>
+                <strong>Location:</strong> {event.location || 'Not provided'}
+              </p>
+            </div>
+          ))
+        ) : (
+          <p>No events found. Check back later!</p>
+        )}
       </div>
 
       <Footer />
