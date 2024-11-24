@@ -1,17 +1,47 @@
+@keyframes backgroundFade {
+  0% {
+    background-image: 
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
+      url('/athens.jpg');
+  }
+  25% {
+    background-image: 
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
+      url('/thearchathens.png');
+  }
+  50% {
+    background-image: 
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
+      url('/ugacampusathens.jpg'); 
+  }
+  75% {
+    background-image: 
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
+      url('/mainlibathens.jpg'); 
+  }
+  100% {
+    background-image: 
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
+      url('/athens.jpg'); 
+  }
+}
+
 body {
+  background-color: #646464;
   background-image: 
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), 
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
     url('/athens.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  animation: backgroundFade 35s infinite ease-in-out; /* Smooth background fade */
 }
 
 .page-container {
@@ -22,11 +52,9 @@ body {
 
 main {
   flex: 1; 
-  padding: 100px 20px 120px; /* Add extra bottom padding to prevent overlap */
+  padding: 100px 20px 120px; /* Space for fixed header and footer */
   box-sizing: border-box;
 }
-
-
 
 .event-header {
   text-align: center;
@@ -47,7 +75,11 @@ main {
   gap: 20px;
   justify-content: center;
   margin-top: 20px;
+<<<<<<< HEAD
   padding: 0 10px; 
+=======
+  padding: 0 10px; /* Improve layout */
+>>>>>>> 52ae364d683b9fc3a8e9e31a8dcc387340c4ac0c
 }
 
 .event-card {
@@ -57,31 +89,45 @@ main {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 250px;
+<<<<<<< HEAD
   text-align: center; 
+=======
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+>>>>>>> 52ae364d683b9fc3a8e9e31a8dcc387340c4ac0c
 }
 
 .event-card img {
-  width: 100%;
-  height: auto;
+  width: 250px;
+  height: 150px;
+  object-fit: cover;
   border-radius: 8px;
-  margin-bottom: 10px; 
-  width: 250px; 
-  height: 150px; 
-  object-fit: cover; 
-  border-radius: 8px;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 
 .event-card h3 {
   font-size: 1.2rem;
   margin: 10px 0;
+<<<<<<< HEAD
   color: #333; 
+=======
+  color: #333;
+>>>>>>> 52ae364d683b9fc3a8e9e31a8dcc387340c4ac0c
 }
 
 .event-card p {
   color: #555;
   font-size: 0.9rem;
+<<<<<<< HEAD
   margin: 5px 0; 
+=======
+  margin: 5px 0;
+>>>>>>> 52ae364d683b9fc3a8e9e31a8dcc387340c4ac0c
 }
 
 .add-event-button {
@@ -116,7 +162,7 @@ main {
   .event-list {
     flex-direction: column;
     align-items: center;
-    padding: 0; 
+    padding: 0;
   }
 
   .event-card {
@@ -149,5 +195,4 @@ main {
     border-radius: 8px;
     margin-bottom: 10px;
   }
-  
 }

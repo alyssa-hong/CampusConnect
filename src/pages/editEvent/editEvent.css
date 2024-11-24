@@ -1,0 +1,126 @@
+
+body {
+  background-image: 
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)), 
+    url('/athens.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+  color: #333; /* Text color for better readability */
+}
+
+.edit-event-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin-top: 2em;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
+}
+
+.event-form {
+  margin-top: 50px;
+  background-color: #c0c0c0d5;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.submit-button {
+  background-color: #b20000d4;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
+
+button:focus,
+input:focus,
+textarea:focus {
+  outline: none;
+  border: 1px solid #4CAF50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.error-message {
+  color: #FF4F4F;
+  font-size: 1rem;
+  margin: 10px 0;
+}
+
+.loading-message {
+  color: #333;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.hidden-input {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .event-form {
+    padding: 15px;
+    max-width: 90%;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .submit-button {
+    font-size: 1rem;
+    padding: 10px 16px;
+  }
+}
