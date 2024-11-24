@@ -64,7 +64,12 @@ main {
   width: 100%;
   height: auto;
   border-radius: 8px;
-  margin-bottom: 10px; /* Add spacing below the image */
+  margin-bottom: 10px; 
+  width: 250px; 
+  height: 150px; 
+  object-fit: cover; 
+  border-radius: 8px;
+  margin-bottom: 10px; 
 }
 
 .event-card h3 {
