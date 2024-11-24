@@ -1,4 +1,3 @@
-// pages/api/getUser.ts (or .js)
 import { NextApiRequest, NextApiResponse } from 'next';
 import connectMongoDB from '../../libs/mongodb';
 import User from '../../models/user';

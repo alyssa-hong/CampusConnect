@@ -1,6 +1,6 @@
-import { getServerSession } from 'next-auth/next';  // Import getServerSession from next-auth
-import connectMongoDB from '@/libs/mongodb'; // The connectMongoDB function you created
-import User from '@/models/user'; // Import the User model
+import { getServerSession } from 'next-auth/next';  
+import connectMongoDB from '@/libs/mongodb'; 
+import User from '@/models/user'; 
 import bcrypt from 'bcryptjs';
 
 export default async function handler(req, res) {

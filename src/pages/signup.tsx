@@ -27,7 +27,7 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
   }>({
     firstName: 'First Name is required.',
     lastName: 'Last Name is required.',
-    userName: 'Username must be at least 6 characters long.',
+    userName: 'Username is required.',
     email: 'Email is required.',
     password: 'Password must be at least 6 characters long.',
   });
@@ -42,12 +42,8 @@ const Signup: React.FC<SignupProps> = ({ setIsAuthorized }) => {
           ? 'Looks good!'
           : `${name.charAt(0).toUpperCase() + name.slice(1)} is required.`;
 
-      case 'userName':
-        return value
-          ? value.length < 6
-            ? 'Username must be at least 6 characters long.'
-            : 'Username looks good!'
-          : 'Username is required.';
+      case 'userName': // Simplified validation for username
+        return value ? 'Username looks good!' : 'Username is required.';
 
       case 'email':
         return value

@@ -1,12 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
-import { FaGithub } from 'react-icons/fa'; // Import GitHub logo from react-icons
-import './Footer.css'; // Import the Footer CSS
+import { FaGithub } from 'react-icons/fa'; 
+import './Footer.css'; 
 
 const Footer: React.FC = () => {
   return (
     <footer className="footer">
-      {/* GitHub Link */}
       <a
         href="https://github.com/alyssa-hong/campusConnect"
         target="_blank"
