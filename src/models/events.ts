@@ -5,10 +5,10 @@ const eventSchema = new mongoose.Schema({
   eventDate: { type: Date, required: true },
   eventTime: { type: String, required: true },
   eventDescription: { type: String, required: true },
-  eventImage: { type: String }, // Store file path or URL
+  eventImage: { type: String }, 
   user: { type: String, required: true },
   contactInfo: { type: String, required: true },
-  location: { type: String, required: true }, // New field added for location
+  location: { type: String, required: true }, 
 });
 
 const Event = mongoose.models.Event || mongoose.model('Event', eventSchema);

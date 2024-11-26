@@ -6,7 +6,6 @@ const connectMongoDB = async () => {
     if (!uri) {
       throw new Error('MongoDB URI is not defined');
     }
-    // Connect to MongoDB without the deprecated options
     await mongoose.connect(uri);
     console.log('Connected to MongoDB');
   } catch (error) {

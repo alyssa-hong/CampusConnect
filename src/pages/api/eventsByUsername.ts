@@ -1,4 +1,3 @@
-// /pages/api/eventsByContactInfo.ts
 import { NextApiRequest, NextApiResponse } from 'next';
 import connectMongoDB from '../../libs/mongodb';
 import Event from '../../models/events';

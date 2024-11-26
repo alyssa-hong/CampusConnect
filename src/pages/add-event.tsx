@@ -100,14 +100,14 @@ const AddEventPage: React.FC = () => {
 
       const { s3Url } = await uploadRes.json();
 
-      // Prepare event data
+      //  Event data
       const eventData = {
         eventName,
         eventDate,
         eventTime,
         eventTime24: formattedTime,
         eventDescription,
-        eventImage: s3Url, // Save relative path returned by the backend
+        eventImage: s3Url,
         user: userName,
         contactInfo,
         location,

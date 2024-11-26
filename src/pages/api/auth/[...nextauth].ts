@@ -1,6 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next";  // Import types
+import { NextApiRequest, NextApiResponse } from "next";  
 import NextAuth from "next-auth";
-import { authConfig } from "@/auth"; // Import your auth config
+import { authConfig } from "@/auth"; 
 
-// Properly type the parameters as NextApiRequest and NextApiResponse
 export default (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, authConfig);

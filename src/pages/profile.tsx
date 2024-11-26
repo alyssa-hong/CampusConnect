@@ -116,7 +116,6 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
 
   return (
     <div>
-      {/* Include Header with isAuthorized and logout functions */}
       <Header setIsAuthorized={setIsAuthorized} isAuthorized={!!session?.user} logout={logout} />
 
       <main className="profileSection">

@@ -14,14 +14,14 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   // Logout function
   const logout = () => {
-    setIsAuthorized(false); // Updates the state to unauthorized
-    router.push('/'); // Redirects the user to the unauthorized homepage
+    setIsAuthorized(false);
+    router.push('/'); 
   };
 
   const showHeader = router.pathname !== '/' && isAuthorized;
 
   return (
-    <SessionProvider session={pageProps.session}> {/* Wrap your app with SessionProvider */}
+    <SessionProvider session={pageProps.session}> 
       <div>
         {showHeader && (
           <Header
