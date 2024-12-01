@@ -1,48 +1,44 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useSession, signOut } from 'next-auth/react'; 
-import Header from '@/components/Header/Header'; // Adjust the path as needed
+import { useSession, signOut } from 'next-auth/react';
+import Header from '@/components/Header/Header';
 import './editEvent.css';
-
 
 const EditEventPage = () => {
   const router = useRouter();
-  const { id } = router.query; // Extract event ID from the URL
+  const { id } = router.query;
 
   const [event, setEvent] = useState({
     eventName: '',
     eventDate: '',
     eventTime: '',
     eventDescription: '',
-    location: '', 
+    location: '',
   });
 
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Mock logout function (replace with actual logic)
   const logout = async () => {
     setIsAuthorized(false);
-    await signOut({ callbackUrl: '/' }); // Log out the user and redirect to the home page
+    await signOut({ callbackUrl: '/' });
   };
 
   useEffect(() => {
-    // Check if user is authorized
     const checkAuthorization = async () => {
       const isAuth = true; 
       setIsAuthorized(isAuth);
 
       if (!isAuth) {
-        router.push('/login'); // Redirect if unauthorized
+        router.push('/login');
       }
     };
 
     checkAuthorization();
-  }, []);
+  }, [router]);
 
   useEffect(() => {
-    // Fetch event data when the ID is available
     if (id) {
       const fetchEventData = async () => {
         setLoading(true);
@@ -56,9 +52,9 @@ const EditEventPage = () => {
           setEvent({
             eventName: data.eventName || '',
             eventDate: formatDate(data.eventDate || new Date().toISOString()),
-            eventTime: preprocessTime(data.eventTime || ''),
+            eventTime: data.eventTime || '', 
             eventDescription: data.eventDescription || '',
-            location: data.location || '', // Corrected field name here
+            location: data.location || '',
           });
         } catch (err) {
           setError((err as Error).message || 'An error occurred while fetching event data');
@@ -71,20 +67,24 @@ const EditEventPage = () => {
     }
   }, [id]);
 
-  const preprocessTime = (time: string) => {
-    if (/^\d{2}:\d{2} (AM|PM)$/i.test(time)) {
-      return time.split(' ')[0]; // Remove AM/PM
-    }
-    return /^\d{2}:\d{2}$/.test(time) ? time : '00:00';
-  };
-
   const formatDate = (date: string) => {
     const newDate = new Date(date);
-    return newDate.toISOString().split('T')[0]; // Return as yyyy-mm-dd
+    return newDate.toISOString().split('T')[0];
+  };
+
+  const isValidTimeFormat = (time: string) => {
+    const regex = /^(\d{1,2}):(\d{2})\s?(AM|PM)$/i;
+    return regex.test(time.trim());
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!isValidTimeFormat(event.eventTime)) {
+      alert('Invalid time format. Please use hh:mm AM/PM.');
+      return;
+    }
+
     try {
       const res = await fetch(`/api/updateEvent`, {
         method: 'PUT',
@@ -99,92 +99,85 @@ const EditEventPage = () => {
         throw new Error(data.error || 'Failed to update event');
       }
 
-      router.push(`/profile-home`); // Redirect on success
+      router.push(`/profile-home`);
     } catch (err) {
       alert((err as Error).message);
     }
   };
 
   if (!isAuthorized) {
-    return null; // Optionally, render a loading spinner or redirect logic here
+    return null;
   }
 
   if (loading) {
-    return <div>Loading event...</div>; // Loading indicator
+    return <div>Loading event...</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>; // Error message
+    return <div>Error: {error}</div>;
   }
 
   return (
     <>
-    <Header
-    setIsAuthorized={setIsAuthorized}
-    isAuthorized={isAuthorized}
-    logout={logout}
-  />
-    <div className="edit-event-page">
-      <h1>Edit Event</h1>
-      <form onSubmit={handleSubmit} className="event-form">
-        <div className="form-group">
-          <label>Event Name</label>
-          <input
-            type="text"
-            value={event.eventName}
-            onChange={(e) => setEvent({ ...event, eventName: e.target.value })}
-            required
-          />
-        </div>
+      <Header setIsAuthorized={setIsAuthorized} isAuthorized={isAuthorized} logout={logout} />
+      <div className="edit-event-page">
+        <h1>Edit Event</h1>
+        <form onSubmit={handleSubmit} className="event-form">
+          <div className="form-group">
+            <label>Event Name</label>
+            <input
+              type="text"
+              value={event.eventName}
+              onChange={(e) => setEvent({ ...event, eventName: e.target.value })}
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label>Event Date</label>
-          <input
-            type="date"
-            value={event.eventDate}
-            onChange={(e) => setEvent({ ...event, eventDate: e.target.value })}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label>Event Date</label>
+            <input
+              type="date"
+              value={event.eventDate}
+              onChange={(e) => setEvent({ ...event, eventDate: e.target.value })}
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label>Event Time</label>
-          <input
-            type="time"
-            value={event.eventTime}
-            onChange={(e) => setEvent({ ...event, eventTime: e.target.value })}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label>Event Time (hh:mm AM/PM)</label>
+            <input
+              type="text"
+              value={event.eventTime}
+              onChange={(e) => setEvent({ ...event, eventTime: e.target.value })}
+              placeholder="e.g., 2:30 PM"
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label>Description</label>
-          <textarea
-            value={event.eventDescription}
-            onChange={(e) =>
-              setEvent({ ...event, eventDescription: e.target.value })
-            }
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label>Description</label>
+            <textarea
+              value={event.eventDescription}
+              onChange={(e) => setEvent({ ...event, eventDescription: e.target.value })}
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label>Event Location</label>
-          <input
-            type="text"
-            value={event.location} // Corrected field name here
-            onChange={(e) =>
-              setEvent({ ...event, location: e.target.value }) // Corrected field name here
-            }
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label>Event Location</label>
+            <input
+              type="text"
+              value={event.location}
+              onChange={(e) => setEvent({ ...event, location: e.target.value })}
+              required
+            />
+          </div>
 
-        <button type="submit" className="submit-button">
-          Update Event
-        </button>
-      </form>
-    </div>
+          <button type="submit" className="submit-button">
+            Update Event
+          </button>
+        </form>
+      </div>
     </>
   );
 };
