@@ -9,7 +9,7 @@ console.log('Token:', token);  // Debug token value
   const isAuthenticated = !!token?.id; // Token contains user information if authenticated
 
   // Define protected and excluded routes
-  const protectedRoutes = ['/home', '/edit-item'];
+  const protectedRoutes = ['/home', '/profile', '/profile-home', '/add-event'];
   const excludedRoutes = ['/login', '/'];
 
   // If the user is not authenticated and trying to access protected routes, redirect to login
@@ -27,5 +27,5 @@ console.log('Token:', token);  // Debug token value
 }
 
 export const config = {
-  matcher: ['/home', '/edit-item', '/profile'], // Match protected routes
+  matcher: ['/home', '/edit-item', '/profile', '/profile-home', '/add-event'], // Match protected routes
 };
