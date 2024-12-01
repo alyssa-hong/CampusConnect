@@ -1,8 +1,8 @@
-// pages/api/events.js
+import { NextApiRequest, NextApiResponse } from 'next';
 import connectMongoDB from '@/libs/mongodb';
 import Event from '@/models/events';
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
       await connectMongoDB();
@@ -26,18 +26,27 @@ export default async function handler(req, res) {
       });
 
       await newEvent.save();
-      res.status(201).json({ message: 'Event created successfully', event: newEvent });
+      return res.status(201).json({ message: 'Event created successfully', event: newEvent });
     } catch (error) {
-      res.status(500).json({ error: 'Error creating event', details: error.message });
+      console.error('Error creating event:', error);
+      if (error instanceof Error) {
+        return res.status(500).json({ error: 'Error creating event', details: error.message });
+      }
+      return res.status(500).json({ error: 'Unknown error occurred while creating event.' });
     }
   } else if (req.method === 'GET') {
     try {
+      await connectMongoDB();
       const events = await Event.find({});
-      res.status(200).json({ events });
+      return res.status(200).json({ events });
     } catch (error) {
-      res.status(500).json({ error: 'Error fetching events', details: error.message });
+      console.error('Error fetching events:', error);
+      if (error instanceof Error) {
+        return res.status(500).json({ error: 'Error fetching events', details: error.message });
+      }
+      return res.status(500).json({ error: 'Unknown error occurred while fetching events.' });
     }
   } else {
-    res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 }

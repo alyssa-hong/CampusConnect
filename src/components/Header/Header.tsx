@@ -9,13 +9,19 @@ import './Header.css';
 interface HeaderProps {
   isAuthorized: boolean;
   logout: () => void;
+  setIsAuthorized?: React.Dispatch<React.SetStateAction<boolean>>; // Optional if not always passed
 }
 
-const Header: React.FC<HeaderProps> = ({ isAuthorized, logout }) => {
+const Header: React.FC<HeaderProps> = ({ isAuthorized, logout, setIsAuthorized }) => {
   const router = useRouter();
 
   // Check if current route is login or signup to hide the header
   const hideHeader = router.pathname === '/login' || router.pathname === '/signup';
+
+  const handleLogout = async () => {
+    if (setIsAuthorized) setIsAuthorized(false); // Reset authorization state if provided
+    await logout();
+  };
 
   return (
     !hideHeader && (
@@ -51,7 +57,7 @@ const Header: React.FC<HeaderProps> = ({ isAuthorized, logout }) => {
 
         <div className="header-right">
           {isAuthorized ? (
-            <button className="logout-button" onClick={logout}>
+            <button className="logout-button" onClick={handleLogout}>
               Logout
             </button>
           ) : (

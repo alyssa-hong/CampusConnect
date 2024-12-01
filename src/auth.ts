@@ -2,8 +2,37 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import User from './models/user';
 import connectMongoDB from './libs/mongodb';
+import { ObjectId } from 'mongodb';
+import { NextAuthOptions, Session } from 'next-auth';
+import { JWT } from 'next-auth/jwt'; 
 
-export const authConfig = {
+interface CustomUser {
+  _id: ObjectId;
+  id: string;
+  email: string;
+  password: string;
+  userName: string;
+}
+
+declare module 'next-auth' {
+  interface Session {
+    user: {
+      id: string;
+      email: string;
+      name: string;
+    };
+  }
+}
+
+declare module 'next-auth/jwt' {
+  interface JWT {
+    id: string;
+    email: string;
+    userName: string;
+  }
+}
+
+export const authConfig: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       credentials: {
@@ -20,20 +49,22 @@ export const authConfig = {
           // Ensure MongoDB is connected
           await connectMongoDB();
 
-          const user = await User.findOne({ email: credentials.email }).lean();
+          // Find the user in the database
+          const user = await User.findOne({ email: credentials.email }).lean() as CustomUser | null;
+
           if (!user) {
             console.log('User not found for email:', credentials.email);
             return null;
           }
 
+          // Compare hashed passwords
           const isMatch = await bcrypt.compare(credentials.password, user.password);
 
           if (isMatch) {
-            
             return {
-              id: user._id.toString(),
+              id: user._id.toString(), 
               email: user.email,
-              name: user.userName, // Use 'userName' based on your MongoDB schema
+              name: user.userName, // Use userName from schema
             };
           } else {
             console.log('Incorrect password');
@@ -48,22 +79,26 @@ export const authConfig = {
   ],
 
   session: {
-    jwt: true,
+    strategy: 'jwt', // Use JSON Web Tokens for session
   },
+
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
-        token.email = user.email;
-        token.userName = user.userName;  // Store 'userName' in the token (consistent with schema)
+        token.id = user.id || ''; // Map user.id to token.id
+        token.email = user.email || ''; // Map user.email to token.email
+        token.userName = user.name || ''; // Map user.name to token.userName
       }
-      console.log(token);
+      console.log('JWT Callback Token:', token); // Debugging
       return token;
     },
-    async session({ session, token }) {
-      session.user.id = token.id;
-      session.user.email = token.email;
-      session.user.name = token.userName;  // Use 'userName' in the session (consistent with schema)
+    async session({ session, token }: { session: Session; token: JWT }) {
+      session.user = {
+        id: token.id || '', 
+        email: token.email || '', 
+        name: token.userName || '', 
+      };
+      console.log('Session Callback:', session); // Debugging
       return session;
     },
   },

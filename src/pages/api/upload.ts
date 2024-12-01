@@ -32,7 +32,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     upload.single('eventImage')(req as any, {} as any, async (err) => {
       try {
         if (err) {
-          throw new Error(`Upload error: ${err.message}`);
+          throw new Error(`Upload error: ${(err as Error).message}`);
         }
 
         const file = (req as any).file;
@@ -70,7 +70,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(200).json({ message: 'File uploaded successfully', s3Url });
       } catch (error) {
         console.error(error);
-        res.status(400).json({ error: error.message });
+        if (error instanceof Error) {
+          res.status(400).json({ error: error.message });
+        } else {
+          res.status(400).json({ error: 'An unknown error occurred.' });
+        }
       }
     });
   } else {

@@ -17,7 +17,7 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
   });
   const [loading, setLoading] = useState(true);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [isEditable, setIsEditable] = useState({
+  const [isEditable, setIsEditable] = useState<{ [key: string]: boolean }>({
     firstName: false,
     lastName: false,
     userName: false,
@@ -35,7 +35,7 @@ const ProfilePage: React.FC<{ setIsAuthorized: React.Dispatch<React.SetStateActi
 
     const fetchUserData = async () => {
       try {
-        const res = await fetch(`/api/getUser?email=${session.user.email}`);
+        const res = await fetch(`/api/getUser?email=${session?.user?.email || ''}`);
         if (!res.ok) throw new Error('Failed to fetch user data.');
         const data = await res.json();
         setFormData({

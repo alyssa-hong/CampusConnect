@@ -5,17 +5,12 @@ import Header from '../components/Header/Header';
 import Link from 'next/link';
 import Footer from '../components/Footer/Footer';
 import Image from 'next/image';
-import '../styles/HomePage.css'; 
+import '../styles/HomePage.css';
 
 const HomePage: React.FC = () => {
   const { data: session, status } = useSession();
   const [events, setEvents] = useState<any[]>([]);
   const router = useRouter();
-
-  const logout = async () => {
-    await signOut();
-    router.push('/unauthorized');
-  };
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -34,6 +29,11 @@ const HomePage: React.FC = () => {
 
     fetchEvents();
   }, []);
+
+  const logout = async () => {
+    await signOut();
+    router.push('/unauthorized');
+  };
 
   const isAuthorized = status === 'authenticated';
 
@@ -64,16 +64,15 @@ const HomePage: React.FC = () => {
                 <h3><strong>Title:</strong> {event.eventName}</h3>
                 <p><strong>Event Date:</strong> {new Date(event.eventDate).toLocaleDateString()} at {event.eventTime}</p>
                 <p><strong>Description:</strong> {event.eventDescription}</p>
-                <p><strong>Submitted by:</strong> {event.user}</p>
-                <p><strong>Contact:</strong> {event.contactInfo}</p>
-                <p><strong>Location:</strong> {event.location}</p>
+                <p><strong>Submitted by:</strong> {event.user || 'Unknown'}</p>
+                <p><strong>Contact:</strong> {event.contactInfo || 'Not provided'}</p>
+                <p><strong>Location:</strong> {event.location || 'Not provided'}</p>
               </div>
             ))
           ) : (
             <p>{events.length === 0 ? 'No events found.' : 'Loading events...'}</p>
           )}
         </div>
-
 
         <Link href="/add-event">
           <button className="add-event-button" aria-label="Add a new event">Add Event</button>

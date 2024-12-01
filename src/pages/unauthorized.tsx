@@ -54,6 +54,7 @@ const UnauthorizedPage: React.FC = () => {
         </div>
       </div>
 
+      {/* Event List Section */}
       <div className="u-event-list">
         {events.length > 0 ? (
           events.map((event) => (

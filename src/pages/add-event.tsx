@@ -21,25 +21,25 @@ const AddEventPage: React.FC = () => {
 
   // Fetch user details on mount
   useEffect(() => {
-    if (session?.user?.email) {
-      const fetchUserName = async () => {
+    const fetchUserName = async () => {
+      if (session?.user?.email) {
         try {
           const res = await fetch(`/api/getUser?email=${session.user.email}`);
           if (res.ok) {
             const data = await res.json();
-            setUserName(data.userName);
-            setContactInfo(session.user.email);
+            setUserName(data.userName || '');
+            setContactInfo(session.user.email || '');
           } else {
             console.error('Failed to fetch user data');
           }
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-        } finally {
-          setIsLoading(false);
+        } catch (error: any) {
+          console.error('Error fetching user data:', error.message || error);
         }
-      };
-      fetchUserName();
-    }
+      }
+      setIsLoading(false);
+    };
+
+    fetchUserName();
   }, [session]);
 
   // Handle image selection
@@ -55,7 +55,7 @@ const AddEventPage: React.FC = () => {
   };
 
   // Convert 12-hour to 24-hour time format
-  const convertTo24HourFormat = (time: string) => {
+  const convertTo24HourFormat = (time: string): string => {
     const regex = /^(\d{1,2}):(\d{2})\s?(AM|PM)$/i;
     const match = time.trim().match(regex);
 
@@ -63,8 +63,8 @@ const AddEventPage: React.FC = () => {
       throw new Error('Invalid time format. Please use hh:mm AM/PM.');
     }
 
-    let [_, hour, minute, period] = match;
-    hour = parseInt(hour, 10);
+    let [_, hourStr, minute, period] = match;
+    let hour = parseInt(hourStr, 10);
 
     if (period.toUpperCase() === 'PM' && hour !== 12) {
       hour += 12;
@@ -100,7 +100,7 @@ const AddEventPage: React.FC = () => {
 
       const { s3Url } = await uploadRes.json();
 
-      //  Event data
+      // Event data
       const eventData = {
         eventName,
         eventDate,
@@ -108,8 +108,8 @@ const AddEventPage: React.FC = () => {
         eventTime24: formattedTime,
         eventDescription,
         eventImage: s3Url,
-        user: userName,
-        contactInfo,
+        user: userName || '',
+        contactInfo: contactInfo || '',
         location,
       };
 
@@ -127,8 +127,8 @@ const AddEventPage: React.FC = () => {
 
       // Redirect to home page after successful submission
       router.push('/home');
-    } catch (error) {
-      alert(error.message);
+    } catch (error: any) {
+      alert(error.message || 'An unexpected error occurred.');
     }
   };
 
